@@ -52,5 +52,21 @@ public class Movie {
             System.out.format("%s, %s, %s, %s\n", id, name, year, rating);
         }
     }
+    public void updateMovie(Connection conn, long idMovie, String MovieName, String MovieYear, long Country_idCountry,
+                            long Type_idType, long Director_idDirector) throws SQLException{
+
+        String query = "UPDATE Actor SET MovieName = ?, MovieYear = ?, Country_idCountry = ?, Type_idType = ?," +
+                " Director_idDirector = ? WHERE idMovie = ?;";
+
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, MovieName);
+        preparedStmt.setString(2, MovieYear);
+        preparedStmt.setLong(3, Country_idCountry);
+        preparedStmt.setLong(4, Type_idType);
+        preparedStmt.setLong(5, Director_idDirector);
+        preparedStmt.setLong(6, idMovie);
+
+        preparedStmt.execute();
+    }
 
 }
