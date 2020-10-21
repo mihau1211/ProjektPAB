@@ -45,6 +45,7 @@ public class Actor {
             String name = rs.getString("ActorName");
             String year = rs.getString("ActorBirthDate");
             System.out.format("%s, %s, %s\n", id, name, year);
+            System.out.format("-----------------------------------------------\nActor Name----------Actor Birth Date\n%s ----------   %s\n", name, year);
         }
     }
 }
