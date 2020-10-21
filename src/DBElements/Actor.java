@@ -47,4 +47,17 @@ public class Actor {
             System.out.format("-----------------------------------------------\nActor Name----------Actor Birth Date\n%s ----------   %s\n", name, year);
         }
     }
+    public void updateActor(Connection conn, long idActor, String ActorName, String ActorBirthDate,
+                            long Country_idCountry) throws SQLException{
+
+        String query = "UPDATE Actor SET ActorName = ?, ActorBirthDate = ?, Country_idCountry = ? WHERE idActor = ?;";
+
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, ActorName);
+        preparedStmt.setString(2, ActorBirthDate);
+        preparedStmt.setLong(3, Country_idCountry);
+        preparedStmt.setLong(4, idActor);
+
+        preparedStmt.execute();
+    }
 }
