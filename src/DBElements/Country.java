@@ -43,5 +43,15 @@ public class Country {
             System.out.format("%s, %s\n", id, name);
         }
     }
+    public void updateCountry(Connection conn, long idCountry, String CountryName) throws SQLException{
+
+        String query = "UPDATE Country SET CountryName = ? WHERE idCOuntry = ?;";
+
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, CountryName);
+        preparedStmt.setLong(2, idCountry);
+
+        preparedStmt.execute();
+    }
 
 }
