@@ -47,5 +47,19 @@ public class Director {
             System.out.format("%s, %s, %s\n", id, name, year);
         }
     }
+    public void updateDirector(Connection conn, long idDirector, String DirectorName,
+                               String DirectorBirthDate, long Country_idCountry) throws SQLException{
+
+        String query = "UPDATE Director SET DirectorName = ?, DirectorBirthDate = ?, Country_idCountry = ?, " +
+                "WHERE idDirector = ?;";
+
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, DirectorName);
+        preparedStmt.setString(2, DirectorBirthDate);
+        preparedStmt.setLong(3, Country_idCountry);
+        preparedStmt.setLong(4, idDirector);
+
+        preparedStmt.execute();
+    }
 
 }
