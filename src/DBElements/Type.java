@@ -3,7 +3,7 @@ package DBElements;
 import java.sql.*;
 
 public class Type {
-    public void addType(Connection conn, String TypeName) throws SQLException {
+    public void insertType(Connection conn, String TypeName) throws SQLException {
 
         String query = " insert into Type (TypeName)"
                 + " values (?)";
