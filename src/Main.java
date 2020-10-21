@@ -16,7 +16,7 @@ public class Main {
         Director director = new Director();
         Movie movie = new Movie();
         Type type = new Type();
-        
+
 //        insert.addCountry(connectToSql.conn, "POLAND");
 //        insert.addType(connectToSql.conn, "Action");
 //        insert.addDirector(connectToSql.conn, "TMP Director", "1982-09-12", 1);
