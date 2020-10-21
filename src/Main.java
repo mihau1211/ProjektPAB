@@ -19,6 +19,7 @@ public class Main {
         Director director = new Director();
         Movie movie = new Movie();
         Type type = new Type();
+        
 
 //        country.insertCountry(connectToSql.conn, "POLAND");
 //        type.insertType(connectToSql.conn, "Action");
