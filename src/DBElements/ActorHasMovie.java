@@ -14,7 +14,7 @@ public class ActorHasMovie {
 
         preparedStmt.execute();
     }
-    public void deleteAHM(Connection conn, long idActor, long idMovie) throws SQLException {
+    public void deleteActorHasMovie(Connection conn, long idActor, long idMovie) throws SQLException {
 
         String query = "DELETE FROM Actor_Has_Movie WHERE Actor_idActor=? AND Movie_idMovie=?;";
 
@@ -24,7 +24,7 @@ public class ActorHasMovie {
 
         preparedStmt.execute();
     }
-    public void selectActosHasMovie(Connection conn) throws SQLException {
+    public void selectActorHasMovie(Connection conn) throws SQLException {
 
         String query = "SELECT * FROM Actor_Has_Movie";
 
