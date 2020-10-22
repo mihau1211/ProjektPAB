@@ -69,18 +69,17 @@ public class Actor {
             long id = rs.getLong("idActor");
             String name = rs.getString("ActorName");
             String year = rs.getString("ActorBirthDate");
-            System.out.format("%s ----------   %s\n", name, year);
+            System.out.format("| %s | ---------- | %s | ---------- | %s |\n", id, name, year);
         }
     }
-    public void updateActor(Connection conn, long idActor, String ActorName, String ActorBirthDate,
-                            long Country_idCountry) throws SQLException{
+    public void updateActor(Connection conn, long idActor) throws SQLException{
 
         String query = "UPDATE Actor SET ActorName = ?, ActorBirthDate = ?, Country_idCountry = ? WHERE idActor = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, ActorName);
-        preparedStmt.setString(2, ActorBirthDate);
-        preparedStmt.setLong(3, Country_idCountry);
+        preparedStmt.setString(1, getName());
+        preparedStmt.setString(2, getBirthDate());
+        preparedStmt.setLong(3, getCountry());
         preparedStmt.setLong(4, idActor);
 
         preparedStmt.execute();
