@@ -1,8 +1,21 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class Type {
+    Scanner scan = new Scanner(System.in);
+    String name;
+    long typeID;
+
+    public String getName() {
+        return name = scan.nextLine();
+    }
+
+    public long getTypeID() {
+        return typeID = scan.nextLong();
+    }
+
     public void insertType(Connection conn, String TypeName) throws SQLException {
 
         String query = " insert into Type (TypeName)"
