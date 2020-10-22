@@ -20,7 +20,6 @@ public class Main {
         Movie movie = new Movie();
         Type type = new Type();
 
-
         boolean end=true;
         int switcher;
         while(end){
@@ -32,7 +31,12 @@ public class Main {
             System.out.println("| 5. Pokaz rezyserow");
             System.out.println("| 6. Usun film");
             System.out.println("| 7. Usun aktora");
-            System.out.println("| 8. Wyjdz");
+            System.out.println("| 8. Zmodyfikuj film");
+            System.out.println("| 9. Zmodyfikuj aktora");
+            System.out.println("| 0. Wyjdz");
+            System.out.println("================================================================================");
+
+            long numberID;
             switcher = scan.nextInt();
             switch(switcher){
                 case 1:
@@ -42,13 +46,15 @@ public class Main {
                     actor.insertActor(connectToSql.conn);
                     break;
                 case 3:
+                    System.out.printf("| ID| ---------- | RATING | ---------- | MOVIE TITLE | ---------- | RELEASE DATE |\n");
                     movie.selectMovie(connectToSql.conn);
                     break;
                 case 4:
-                    System.out.println("-----------------------------------------------\nActor Name----------Actor Birth Date\n");
+                    System.out.printf("| ID| ---------- | ACTOR NAME | ---------- | ACTOR BIRTH DATE |\n");
                     actor.selectActor(connectToSql.conn);
                     break;
                 case 5:
+                    System.out.printf("| ID| ---------- | DIRECTOR NAME | ---------- | DIRECTOR BIRTH DATE |\n");
                     director.selectDirector(connectToSql.conn);
                     break;
                 case 6:
@@ -58,6 +64,16 @@ public class Main {
                     actor.deleteActorByID(connectToSql.conn);
                     break;
                 case 8:
+                    System.out.println("Podaj id filmu ktorego chcesz zmodyfikowac:");
+                    numberID = scan.nextLong();
+                    movie.updateMovie(connectToSql.conn, numberID);
+                    break;
+                case 9:
+                    System.out.println("Podaj id aktora ktorego chcesz zmodyfikowac:");
+                    numberID = scan.nextLong();
+                    actor.updateActor(connectToSql.conn, numberID);
+                    break;
+                case 0:
                     end=false;
                     System.out.println("Bye!!!!!!!!!");
                     break;
