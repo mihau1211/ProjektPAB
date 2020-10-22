@@ -16,13 +16,13 @@ public class Type {
         return typeID = scan.nextLong();
     }
 
-    public void insertType(Connection conn, String TypeName) throws SQLException {
+    public void insertType(Connection conn) throws SQLException {
 
         String query = " insert into Type (TypeName)"
                 + " values (?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, TypeName);
+        preparedStmt.setString (1, getName());
 
         preparedStmt.execute();
     }
