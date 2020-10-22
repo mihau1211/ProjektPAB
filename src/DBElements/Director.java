@@ -67,7 +67,7 @@ public class Director {
             long id = rs.getLong("idDirector");
             String name = rs.getString("DirectorName");
             String year = rs.getString("DirectorBirthDate");
-            System.out.format("%s, %s, %s\n", id, name, year);
+            System.out.format("| %s | ---------- | %s | ---------- | %s |\n", id, name, year);
         }
     }
     public void updateDirector(Connection conn, long idDirector, String DirectorName,
