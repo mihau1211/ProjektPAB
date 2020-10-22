@@ -1,8 +1,26 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class ActorHasMovie {
+    Scanner scan = new Scanner(System.in);
+    long actorID;
+    long movieID;
+    long ahmID;
+
+    public long getActorID() {
+        return actorID = scan.nextLong();
+    }
+
+    public long getMovieID() {
+        return movieID = scan.nextLong();
+    }
+
+    public long getAhmID() {
+        return ahmID = scan.nextLong();
+    }
+
     public void insertActorHasMovie(Connection conn, long Actor_idActor, long Movie_idMovie) throws SQLException {
 
         String query = " insert into Actor_Has_Movie (Actor_idActor, Movie_idMovie)"
