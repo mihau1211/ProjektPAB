@@ -21,19 +21,48 @@ public class Main {
         Type type = new Type();
 
 
-//        country.insertCountry(connectToSql.conn, "POLAND");
-//        type.insertType(connectToSql.conn, "Action");
-//        director.insertDirector(connectToSql.conn, "TMP Director", "1982-09-12", 1);
-//        movie.insertMovie(connectToSql.conn, "TMP movie", "2020-01-01", 8, 1, 1, 1);
-//        actor.insertActor(connectToSql.conn, "TMP Actor", "1948-04-12", 1);
-//        actorHasMovie.insertActorHasMovie(connectToSql.conn, 1, 1);
+        boolean end=true;
+        int switcher;
+        while(end){
+            System.out.println("================================================================================");
+            System.out.println("| 1. Dodaj film");
+            System.out.println("| 2. Dodaj aktora");
+            System.out.println("| 3. Pokaz filmy");
+            System.out.println("| 4. Pokaz aktorow");
+            System.out.println("| 5. Pokaz rezyserow");
+            System.out.println("| 6. Usun film");
+            System.out.println("| 7. Usun aktora");
+            System.out.println("| 8. Wyjdz");
+            switcher = scan.nextInt();
+            switch(switcher){
+                case 1:
+                    movie.insertMovie(connectToSql.conn);
+                    break;
+                case 2:
+                    actor.insertActor(connectToSql.conn);
+                    break;
+                case 3:
+                    movie.selectMovie(connectToSql.conn);
+                    break;
+                case 4:
+                    System.out.println("-----------------------------------------------\nActor Name----------Actor Birth Date\n");
+                    actor.selectActor(connectToSql.conn);
+                    break;
+                case 5:
+                    director.selectDirector(connectToSql.conn);
+                    break;
+                case 6:
+                    movie.deleteMovieByID(connectToSql.conn);
+                    break;
+                case 7:
+                    actor.deleteActorByID(connectToSql.conn);
+                    break;
+                case 8:
+                    end=false;
+                    System.out.println("Bye!!!!!!!!!");
+                    break;
 
-//        actor.updateActor(connectToSql.conn, 1, "TMP actor", "1982-09-12", 1);
-//        actor.selectActor(connectToSql.conn);
-//        actorHasMovie.selectActosHasMovie(connectToSql.conn);
-//        country.selectCountry(connectToSql.conn);
-//        director.selectDirector(connectToSql.conn);
-//        movie.selectMovie(connectToSql.conn);
-//        type.selectType(connectToSql.conn);
+            }
+        }
     }
 }
