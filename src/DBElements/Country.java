@@ -12,17 +12,17 @@ public class Country {
         return name = scan.nextLine();
     }
 
-    public long getCountry() {
+    public long getCountryID() {
         return countryID = scan.nextLong();
     }
 
-    public void insertCountry(Connection conn, String countryName) throws SQLException {
+    public void insertCountry(Connection conn) throws SQLException {
 
         String query = " insert into Country (countryName)"
                 + " values (?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, countryName);
+        preparedStmt.setString (1, getName());
 
         preparedStmt.execute();
     }
