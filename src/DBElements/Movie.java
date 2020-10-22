@@ -1,31 +1,68 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class Movie {
-    public void insertMovie(Connection conn, String movieName, String movieYear, int movieRating,
-                         long Country_idCountry, long Type_idType, long Director_idDirector) throws SQLException {
+    Scanner scan = new Scanner(System.in);
+    String name;
+    String year;
+    int rating;
+    long typeID;
+    long directorID;
+    long countryID;
+    long movieID;
+
+    public String getName() {
+        return name = scan.nextLine();
+    }
+
+    public String getYear() {
+        return year = scan.nextLine();
+    }
+
+    public int getRating() {
+        return rating = scan.nextInt();
+    }
+
+    public long getTypeID() {
+        return typeID = scan.nextLong();
+    }
+
+    public long getDirectorID() {
+        return directorID = scan.nextLong();
+    }
+
+    public long getCountry() {
+        return countryID = scan.nextLong();
+    }
+
+    public long getMovieID() {
+        return movieID = scan.nextLong();
+    }
+
+    public void insertMovie(Connection conn) throws SQLException {
 
         String query = " insert into Movie (movieName, movieYear, movieRating, Country_idCountry, Type_idType, " +
                 "Director_idDirector)"
                 + " values (?,?,?,?,?,?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, movieName);
-        preparedStmt.setString (2, movieYear);
-        preparedStmt.setInt   (3, movieRating);
-        preparedStmt.setLong(4, Country_idCountry);
-        preparedStmt.setLong(5, Type_idType);
-        preparedStmt.setLong(6, Director_idDirector);
+        preparedStmt.setString (1, getName());
+        preparedStmt.setString (2, getYear());
+        preparedStmt.setInt   (3, getRating());
+        preparedStmt.setLong(4, getCountry());
+        preparedStmt.setLong(5, getTypeID());
+        preparedStmt.setLong(6, getDirectorID());
 
         preparedStmt.execute();
     }
-    public void deleteMovieByID(Connection conn, long idMovie) throws SQLException {
+    public void deleteMovieByID(Connection conn) throws SQLException {
 
-        String query = "DELETE FROM Movie WHERE ?;";
+        String query = "DELETE FROM Movie WHERE idMovie=?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setLong (1, idMovie);
+        preparedStmt.setLong (1, getMovieID());
 
         preparedStmt.execute();
     }
