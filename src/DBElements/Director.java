@@ -1,8 +1,31 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class Director {
+    Scanner scan = new Scanner(System.in);
+    String name;
+    String birthDate;
+    long countryID;
+    long directorID;
+
+    public String getName() {
+        return name = scan.nextLine();
+    }
+
+    public String getBirthDate() {
+        return birthDate = scan.nextLine();
+    }
+
+    public long getCountry() {
+        return countryID = scan.nextLong();
+    }
+
+    public long getDirectorID() {
+        return directorID = scan.nextLong();
+    }
+
     public void insertDirector(Connection conn, String DirectorName, String DirectorBirthDate,
                             long Country_idCountry) throws SQLException {
 
