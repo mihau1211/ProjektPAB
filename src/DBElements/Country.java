@@ -1,8 +1,21 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class Country {
+    Scanner scan = new Scanner(System.in);
+    String name;
+    long countryID;
+
+    public String getName() {
+        return name = scan.nextLine();
+    }
+
+    public long getCountry() {
+        return countryID = scan.nextLong();
+    }
+
     public void insertCountry(Connection conn, String countryName) throws SQLException {
 
         String query = " insert into Country (countryName)"
