@@ -14,26 +14,32 @@ public class Movie {
     long movieID;
 
     public String getName() {
+        System.out.println("Podaj nazwe filmu:");
         return name = scan.nextLine();
     }
 
     public String getYear() {
+        System.out.println("Podaj rok produkcji:");
         return year = scan.nextLine();
     }
 
     public int getRating() {
+        System.out.println("Podaj ocene:");
         return rating = scan.nextInt();
     }
 
     public long getTypeID() {
+        System.out.println("Podaj id gatunku:");
         return typeID = scan.nextLong();
     }
 
     public long getDirectorID() {
+        System.out.println("Podaj rezysera:");
         return directorID = scan.nextLong();
     }
 
     public long getCountry() {
+        System.out.println("Podaj id kraju produkcji:");
         return countryID = scan.nextLong();
     }
 
@@ -86,22 +92,22 @@ public class Movie {
             String name = rs.getString("MovieName");
             String year = rs.getString("MovieYear");
             int rating = rs.getInt("MovieRating");
-            System.out.format("%s, %s, %s, %s\n", id, name, year, rating);
+            System.out.format("| %s | ---------- |   %s    | ---------- | %s | ---------- | %s |\n",id,  rating, name, year);
         }
     }
-    public void updateMovie(Connection conn, long idMovie, String MovieName, String MovieYear, long Country_idCountry,
-                            long Type_idType, long Director_idDirector) throws SQLException{
+    public void updateMovie(Connection conn, long idMovie) throws SQLException{
 
-        String query = "UPDATE Actor SET MovieName = ?, MovieYear = ?, Country_idCountry = ?, Type_idType = ?," +
-                " Director_idDirector = ? WHERE idMovie = ?;";
+        String query = "UPDATE Movie SET MovieName = ?, MovieYear = ?, MovieRating = ?, Country_idCountry = ?," +
+                " Type_idType = ?, Director_idDirector = ? WHERE idMovie = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, MovieName);
-        preparedStmt.setString(2, MovieYear);
-        preparedStmt.setLong(3, Country_idCountry);
-        preparedStmt.setLong(4, Type_idType);
-        preparedStmt.setLong(5, Director_idDirector);
-        preparedStmt.setLong(6, idMovie);
+        preparedStmt.setString(1, getName());
+        preparedStmt.setString(2, getYear());
+        preparedStmt.setInt(3, getRating());
+        preparedStmt.setLong(4, getCountry());
+        preparedStmt.setLong(5, getTypeID());
+        preparedStmt.setLong(6, getDirectorID());
+        preparedStmt.setLong(7, 1);
 
         preparedStmt.execute();
     }
