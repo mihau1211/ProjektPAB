@@ -58,13 +58,15 @@ public class Main {
                     director.selectDirector(connectToSql.conn);
                     break;
                 case 6:
+                    System.out.println("Podaj ID filmu do usuniecia:");
                     movie.deleteMovieByID(connectToSql.conn);
                     break;
                 case 7:
+                    System.out.println("Podaj ID aktora do usuniecia:");
                     actor.deleteActorByID(connectToSql.conn);
                     break;
                 case 8:
-                    System.out.println("Podaj id filmu ktorego chcesz zmodyfikowac:");
+                    System.out.println("Podaj id filmu ktory chcesz zmodyfikowac:");
                     numberID = scan.nextLong();
                     movie.updateMovie(connectToSql.conn, numberID);
                     break;
