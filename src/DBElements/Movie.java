@@ -65,12 +65,18 @@ public class Movie {
     }
     public void deleteMovieByID(Connection conn) throws SQLException {
 
-        String query = "DELETE FROM Movie WHERE idMovie=?;";
+        movieID=getMovieID();
 
-        PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setLong (1, getMovieID());
+        String query1 = "DELETE FROM Actor_Has_Movie WHERE Movie_idMovie=?;";
+        String query2 = "DELETE FROM Movie WHERE idMovie=?;";
 
-        preparedStmt.execute();
+        PreparedStatement preparedStmt1 = conn.prepareStatement(query1);
+        preparedStmt1.setLong(1, movieID);
+        preparedStmt1.execute();
+
+        PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
+        preparedStmt2.setLong (1, movieID);
+        preparedStmt2.execute();
     }
     public void deleteMovieByName(Connection conn, String MovieName) throws SQLException{
         String query = "DELETE FROM Movie WHERE ?;";
