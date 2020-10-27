@@ -49,11 +49,14 @@ public class Country {
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
-
+        System.out.println("===========");
+        System.out.println("||COUNTRY||");
+        System.out.println("===========");
+        System.out.println(" |ID|        NAME|");
         while (rs.next()){
             long id = rs.getLong("idCountry");
             String name = rs.getString("CountryName");
-            System.out.format("%s, %s\n", id, name);
+            System.out.format("|%1$-5s|%2$-20s|\n", id, name);
         }
     }
     public void updateCountry(Connection conn, long idCountry, String CountryName) throws SQLException{

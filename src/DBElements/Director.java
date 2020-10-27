@@ -62,12 +62,17 @@ public class Director {
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
+        System.out.println("=============");
+        System.out.println("||DIRECTORS||");
+        System.out.println("=============");
+
+        System.out.println("|ID|   |NAME|     |YEAR|");
 
         while (rs.next()){
             long id = rs.getLong("idDirector");
             String name = rs.getString("DirectorName");
             String year = rs.getString("DirectorBirthDate");
-            System.out.format("| %s | ---------- | %s | ---------- | %s |\n", id, name, year);
+            System.out.format("|%1$-5s|%2$-20s|%3$-11s|\n", id, name, year);
         }
     }
     public void updateDirector(Connection conn, long idDirector, String DirectorName,

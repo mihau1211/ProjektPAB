@@ -70,12 +70,17 @@ public class Actor {
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
+        System.out.println("==========");
+        System.out.println("||ACTORS||");
+        System.out.println("==========");
+
+        System.out.println("| ID  |       NAME         |    YEAR   |");
 
         while (rs.next()){
             long id = rs.getLong("idActor");
             String name = rs.getString("ActorName");
             String year = rs.getString("ActorBirthDate");
-            System.out.format("| %s | ---------- | %s | ---------- | %s |\n", id, name, year);
+            System.out.format("|%1$-5s|%2$-20s|%3$-11s|\n", id, name, year);
         }
     }
     public void updateActor(Connection conn, long idActor) throws SQLException{

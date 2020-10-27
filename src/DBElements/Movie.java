@@ -92,13 +92,17 @@ public class Movie {
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
+        System.out.println("=========");
+        System.out.println("||MOVIE||");
+        System.out.println("=========");
+        System.out.println("| ID  |RATING|    NAME   |    YEAR    |");
 
         while (rs.next()) {
             long id = rs.getLong("idMovie");
             String name = rs.getString("MovieName");
             String year = rs.getString("MovieYear");
             int rating = rs.getInt("MovieRating");
-            System.out.format("| %s | ---------- |   %s    | ---------- | %s | ---------- | %s |\n",id,  rating, name, year);
+            System.out.format("|%1$-5s|%2$-7s|%3$-11s|%4$-11s|\n",id,  rating, name, year);
         }
     }
     public void updateMovie(Connection conn, long idMovie) throws SQLException{
