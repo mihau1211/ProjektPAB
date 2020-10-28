@@ -46,14 +46,12 @@ public class Main {
                     actor.insertActor(connectToSql.conn);
                     break;
                 case 3:
-                    System.out.printf("| ID| ---------- | RATING | ---------- | MOVIE TITLE | ---------- | RELEASE DATE |\n");
                     movie.selectMovie(connectToSql.conn);
                     break;
                 case 4:
                     actor.selectActor(connectToSql.conn);
                     break;
                 case 5:
-                    System.out.printf("| ID| ---------- | DIRECTOR NAME | ---------- | DIRECTOR BIRTH DATE |\n");
                     director.selectDirector(connectToSql.conn);
                     break;
                 case 6:
