@@ -88,17 +88,22 @@ public class Movie {
     }
     public void selectMovie(Connection conn) throws SQLException {
 
-        String query = "SELECT * FROM Movie";
+        String query = "SELECT idMovie, MovieName, MovieYear, MovieRating, TypeName FROM Movie, Type WHERE Type_idType=idType;";
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
+        System.out.println("=========");
+        System.out.println("||MOVIE||");
+        System.out.println("=========");
+        System.out.println("| ID  |RATING|    NAME   |    YEAR    |     TYPE    |");
 
         while (rs.next()) {
             long id = rs.getLong("idMovie");
             String name = rs.getString("MovieName");
             String year = rs.getString("MovieYear");
             int rating = rs.getInt("MovieRating");
-            System.out.format("| %s | ---------- |   %s    | ---------- | %s | ---------- | %s |\n",id,  rating, name, year);
+            String type = rs.getString("TypeName");
+            System.out.format("|%1$-5s|%2$-6s|%3$-11s|%4$-12s|%5$-13s|\n",id,  rating, name, year, type);
         }
     }
     public void updateMovie(Connection conn, long idMovie) throws SQLException{
