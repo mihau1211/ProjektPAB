@@ -48,11 +48,15 @@ public class ActorHasMovie {
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
+        System.out.println("========");
+        System.out.println("||ACTOR_HAS_MOVIE||");
+        System.out.println("========");
+        System.out.println(" |ID_A| |ID_M|");
 
         while (rs.next()){
             long idActor = rs.getLong("Actor_idActor");
             String idMovie = rs.getString("Movie_idMovie");
-            System.out.format("%s, %s \n", idActor, idMovie);
+            System.out.format("|%1$-5s|%2$-5s|\n", idActor, idMovie);
         }
     }
 
