@@ -58,16 +58,22 @@ public class Director {
     }
     public void selectDirector(Connection conn) throws SQLException {
 
-        String query = "SELECT * FROM Director";
+        String query = "SELECT idDirector, DirectorName, DirectorBirthDate, CountryName FROM Director, Country WHERE Country_idCountry=idCountry";
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
+        System.out.println("=============");
+        System.out.println("||DIRECTORS||");
+        System.out.println("=============");
+
+        System.out.println("| ID  |       NAME         |    YEAR   |   COUNTRY   |");
 
         while (rs.next()){
             long id = rs.getLong("idDirector");
             String name = rs.getString("DirectorName");
             String year = rs.getString("DirectorBirthDate");
-            System.out.format("| %s | ---------- | %s | ---------- | %s |\n", id, name, year);
+            String country = rs.getString("CountryName");
+            System.out.format("|%1$-5s|%2$-20s|%3$-11s|%4$-13s|\n", id, name, year, country);
         }
     }
     public void updateDirector(Connection conn, long idDirector, String DirectorName,
