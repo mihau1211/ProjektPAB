@@ -118,7 +118,7 @@ public class Movie {
         preparedStmt.setLong(4, getCountry());
         preparedStmt.setLong(5, getTypeID());
         preparedStmt.setLong(6, getDirectorID());
-        preparedStmt.setLong(7, 1);
+        preparedStmt.setLong(7, idMovie);
 
         preparedStmt.execute();
     }
