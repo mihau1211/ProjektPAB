@@ -49,11 +49,15 @@ public class Type {
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
+        System.out.println("========");
+        System.out.println("||TYPE||");
+        System.out.println("========");
+        System.out.println("| ID  |       NAME         |");
 
         while (rs.next()){
             long id = rs.getLong("idType");
             String name = rs.getString("TypeName");
-            System.out.format("%s, %s \n", id, name);
+            System.out.format("|%1$-5s|%2$-12s|\n", id, name);
         }
     }
 }
