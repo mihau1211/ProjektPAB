@@ -66,16 +66,22 @@ public class Actor {
     }
     public void selectActor(Connection conn) throws SQLException {
 
-        String query = "SELECT * FROM Actor";
+        String query = "SELECT idActor, ActorName, ActorBirthDate, CountryName FROM Actor, Country WHERE Country_idCountry=idCountry";
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
+        System.out.println("==========");
+        System.out.println("||ACTORS||");
+        System.out.println("==========");
+
+        System.out.println("| ID  |       NAME         |    YEAR   |   COUNTRY   |");
 
         while (rs.next()){
             long id = rs.getLong("idActor");
             String name = rs.getString("ActorName");
             String year = rs.getString("ActorBirthDate");
-            System.out.format("| %s | ---------- | %s | ---------- | %s |\n", id, name, year);
+            String country = rs.getString("CountryName");
+            System.out.format("|%1$-5s|%2$-20s|%3$-11s|%4$-13s|\n", id, name, year, country);
         }
     }
     public void updateActor(Connection conn, long idActor) throws SQLException{
