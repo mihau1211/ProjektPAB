@@ -60,4 +60,36 @@ public class Type {
             System.out.format("|%1$-5s|%2$-12s|\n", id, name);
         }
     }
+
+    public void addTypes(Connection conn) throws SQLException {
+        String query = " insert into Type (TypeName)"
+                + " values ('ACTION')";
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = " insert into Type (TypeName)"
+                + " values ('COMEDY')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = " insert into Type (TypeName)"
+                + " values ('HORROR')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = " insert into Type (TypeName)"
+                + " values ('THRILLER')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = " insert into Type (TypeName)"
+                + " values ('DRAMA')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = " insert into Type (TypeName)"
+                + " values ('FANTASY')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+    }
 }
