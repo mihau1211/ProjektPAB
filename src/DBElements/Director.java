@@ -6,12 +6,18 @@ import java.util.Scanner;
 public class Director {
     Scanner scan = new Scanner(System.in);
     String name;
+    String surname;
     String birthDate;
     long countryID;
     long directorID;
 
     public String getName() {
         return name = scan.nextLine();
+    }
+
+    public String getSurname() {
+        System.out.println("Podaj nazwisko:");
+        return surname = scan.nextLine();
     }
 
     public String getBirthDate() {
@@ -26,16 +32,16 @@ public class Director {
         return directorID = scan.nextLong();
     }
 
-    public void insertDirector(Connection conn, String DirectorName, String DirectorBirthDate,
-                            long Country_idCountry) throws SQLException {
+    public void insertDirector(Connection conn) throws SQLException {
 
-        String query = " insert into Director (DirectorName, DirectorBirthDate, Country_idCountry)"
-                + " values (?, ?, ?)";
+        String query = " insert into Director (DirectorName, DirectorSurname, DirectorBirthDate, Country_idCountry)"
+                + " values (?, ?, ?, ?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, DirectorName);
-        preparedStmt.setString (2, DirectorBirthDate);
-        preparedStmt.setLong (3, Country_idCountry);
+        preparedStmt.setString (1, getName());
+        preparedStmt.setString (2, getSurname());
+        preparedStmt.setString (3, getBirthDate());
+        preparedStmt.setLong (4, getCountry());
 
         preparedStmt.execute();
     }
@@ -58,7 +64,7 @@ public class Director {
     }
     public void selectDirector(Connection conn) throws SQLException {
 
-        String query = "SELECT idDirector, DirectorName, DirectorBirthDate, CountryName FROM Director, Country WHERE Country_idCountry=idCountry";
+        String query = "SELECT idDirector, DirectorName, DirectorSurname, DirectorBirthDate, CountryName FROM Director, Country WHERE Country_idCountry=idCountry";
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
@@ -66,27 +72,28 @@ public class Director {
         System.out.println("||DIRECTORS||");
         System.out.println("=============");
 
-        System.out.println("| ID  |       NAME         |    YEAR   |   COUNTRY   |");
+        System.out.println("| ID  |       NAME         |       SURNAME         |    YEAR   |   COUNTRY   |");
 
         while (rs.next()){
             long id = rs.getLong("idDirector");
             String name = rs.getString("DirectorName");
+            String surname = rs.getString("DirectorSurname");
             String year = rs.getString("DirectorBirthDate");
             String country = rs.getString("CountryName");
-            System.out.format("|%1$-5s|%2$-20s|%3$-11s|%4$-13s|\n", id, name, year, country);
+            System.out.format("|%1$-5s|%2$-20s|%3$-23s|%4$-11s|%5$-13s|\n", id, name, surname, year, country);
         }
     }
-    public void updateDirector(Connection conn, long idDirector, String DirectorName,
-                               String DirectorBirthDate, long Country_idCountry) throws SQLException{
+    public void updateDirector(Connection conn, long idDirector) throws SQLException{
 
-        String query = "UPDATE Director SET DirectorName = ?, DirectorBirthDate = ?, Country_idCountry = ?, " +
+        String query = "UPDATE Director SET DirectorName = ?, DirectorSurname = ?, DirectorBirthDate = ?, Country_idCountry = ?, " +
                 "WHERE idDirector = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, DirectorName);
-        preparedStmt.setString(2, DirectorBirthDate);
-        preparedStmt.setLong(3, Country_idCountry);
-        preparedStmt.setLong(4, idDirector);
+        preparedStmt.setString(1, getName());
+        preparedStmt.setString(1, getSurname());
+        preparedStmt.setString(3, getBirthDate());
+        preparedStmt.setLong(4, getCountry());
+        preparedStmt.setLong(5, idDirector);
 
         preparedStmt.execute();
     }
