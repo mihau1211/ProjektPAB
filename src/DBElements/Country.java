@@ -70,4 +70,46 @@ public class Country {
         preparedStmt.execute();
     }
 
+
+    public void addCountries(Connection conn) throws SQLException {
+        String query = "insert into Country (countryName)"
+                + " values ('POLAND')";
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = "insert into Country (countryName)"
+                + " values ('ENGLAND')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = "insert into Country (countryName)"
+                + " values ('SCOTLAND')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = "insert into Country (countryName)"
+                + " values ('USA')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = "insert into Country (countryName)"
+                + " values ('GERMANY')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = "insert into Country (countryName)"
+                + " values ('RUSSIA')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = "insert into Country (countryName)"
+                + " values ('BELGIUM')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+
+        query = "insert into Country (countryName)"
+                + " values ('FRANCE')";
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.execute();
+    }
 }
