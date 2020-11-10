@@ -10,15 +10,10 @@ public class MenuBar {
 
     MenuBar() {
         JMenu menus[] = new JMenu[tables.length];
-        ArrayList<JMenuItem> itemsList = new ArrayList<JMenuItem>();
-
-        for (int i = 0; i < 4; i++) {
-            itemsList.add(new JMenuItem(items[i]));
-        }
 
         for (int i = 0; i < tables.length; i++) {
             menus[i] = new JMenu(tables[i]);
-            for (int j = 0; j < itemsList.size(); j++) {
+            for (int j = 0; j < items.length; j++) {
                 menus[i].add(new JMenuItem(items[j]));
             }
             mb.add(menus[i]);
