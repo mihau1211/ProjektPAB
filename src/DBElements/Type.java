@@ -92,4 +92,14 @@ public class Type {
         preparedStmt = conn.prepareStatement(query);
         preparedStmt.execute();
     }
+    public void updateType(Connection conn, long idType) throws SQLException{
+
+        String query = "UPDATE Type SET name = ? WHERE typeID = ?;";
+
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(1, getName());
+
+
+        preparedStmt.execute();
+    }
 }
