@@ -106,7 +106,7 @@ public class Movie {
             System.out.format("|%1$-5s|%2$-6s|%3$-11s|%4$-12s|%5$-13s|\n",id,  rating, name, year, type);
         }
     }
-    public void updateMovie(Connection conn, long idMovie) throws SQLException{
+    public void updateMovie(Connection conn) throws SQLException{
 
         String query = "UPDATE Movie SET MovieName = ?, MovieYear = ?, MovieRating = ?, Country_idCountry = ?," +
                 " Type_idType = ?, Director_idDirector = ? WHERE idMovie = ?;";
@@ -118,7 +118,7 @@ public class Movie {
         preparedStmt.setLong(4, getCountry());
         preparedStmt.setLong(5, getTypeID());
         preparedStmt.setLong(6, getDirectorID());
-        preparedStmt.setLong(7, idMovie);
+        preparedStmt.setLong(7, getMovieID());
 
         preparedStmt.execute();
     }
