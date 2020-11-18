@@ -32,6 +32,7 @@ public class Actor {
     }
 
     public long getActorID() {
+        System.out.println("Podaj ID:");
         return actorID = scan.nextLong();
     }
 
@@ -92,8 +93,9 @@ public class Actor {
             System.out.format("|%1$-5s|%2$-20s|%3$-23s|%4$-11s|%5$-13s|\n", id, name, surname, year, country);
         }
     }
-    public void updateActor(Connection conn, long idActor) throws SQLException{
+    public void updateActor(Connection conn) throws SQLException{
 
+        actorID=getActorID();
         String query = "UPDATE Actor SET ActorName = ?, ActorSurname = ?, ActorBirthDate = ?, Country_idCountry = ? WHERE idActor = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -101,7 +103,7 @@ public class Actor {
         preparedStmt.setString(1, getSurname());
         preparedStmt.setString(3, getBirthDate());
         preparedStmt.setLong(4, getCountry());
-        preparedStmt.setLong(5, idActor);
+        preparedStmt.setLong(5, actorID);
 
         preparedStmt.execute();
     }
