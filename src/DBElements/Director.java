@@ -12,6 +12,7 @@ public class Director {
     long directorID;
 
     public String getName() {
+        System.out.println("Podaj imie:");
         return name = scan.nextLine();
     }
 
@@ -21,14 +22,17 @@ public class Director {
     }
 
     public String getBirthDate() {
+        System.out.println("Podaj date urodzenia:");
         return birthDate = scan.nextLine();
     }
 
-    public long getCountry() {
+    public long getCountryID() {
+        System.out.println("Podaj ID kraju:");
         return countryID = scan.nextLong();
     }
 
     public long getDirectorID() {
+        System.out.println("Podaj ID:");
         return directorID = scan.nextLong();
     }
 
@@ -41,16 +45,17 @@ public class Director {
         preparedStmt.setString (1, getName());
         preparedStmt.setString (2, getSurname());
         preparedStmt.setString (3, getBirthDate());
-        preparedStmt.setLong (4, getCountry());
+        preparedStmt.setLong (4, getCountryID());
 
         preparedStmt.execute();
     }
-    public void deleteDirectorByID(Connection conn, long idDirector) throws SQLException {
+    public void deleteDirectorByID(Connection conn) throws SQLException {
 
+        directorID=getDirectorID();
         String query = "DELETE FROM director WHERE ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setLong (1, idDirector);
+        preparedStmt.setLong (1, directorID);
 
         preparedStmt.execute();
     }
@@ -83,7 +88,7 @@ public class Director {
             System.out.format("|%1$-5s|%2$-20s|%3$-23s|%4$-11s|%5$-13s|\n", id, name, surname, year, country);
         }
     }
-    public void updateDirector(Connection conn, long idDirector) throws SQLException{
+    public void updateDirector(Connection conn) throws SQLException{
 
         String query = "UPDATE Director SET DirectorName = ?, DirectorSurname = ?, DirectorBirthDate = ?, Country_idCountry = ?, " +
                 "WHERE idDirector = ?;";
@@ -92,8 +97,8 @@ public class Director {
         preparedStmt.setString(1, getName());
         preparedStmt.setString(1, getSurname());
         preparedStmt.setString(3, getBirthDate());
-        preparedStmt.setLong(4, getCountry());
-        preparedStmt.setLong(5, idDirector);
+        preparedStmt.setLong(4, getCountryID());
+        preparedStmt.setLong(5, getDirectorID());
 
         preparedStmt.execute();
     }
