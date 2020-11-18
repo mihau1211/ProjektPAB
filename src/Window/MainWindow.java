@@ -7,7 +7,7 @@ public class MainWindow {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MyFrame();
+                new MainFrame();
             }
         });
     }
