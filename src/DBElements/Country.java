@@ -13,6 +13,7 @@ public class Country {
     }
 
     public long getCountryID() {
+        System.out.println("Podaj ID:");
         return countryID = scan.nextLong();
     }
 
@@ -26,12 +27,13 @@ public class Country {
 
         preparedStmt.execute();
     }
-    public void deleteCountryByID(Connection conn, long idCountry) throws SQLException {
+    public void deleteCountryByID(Connection conn) throws SQLException {
 
+        countryID=getCountryID();
         String query = "DELETE FROM country WHERE ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setLong (1, idCountry);
+        preparedStmt.setLong (1, countryID);
 
         preparedStmt.execute();
     }
@@ -59,13 +61,13 @@ public class Country {
             System.out.format("|%1$-5s|%2$-20s|\n", id, name);
         }
     }
-    public void updateCountry(Connection conn, long idCountry, String CountryName) throws SQLException{
+    public void updateCountry(Connection conn) throws SQLException{
 
         String query = "UPDATE Country SET CountryName = ? WHERE idCOuntry = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, CountryName);
-        preparedStmt.setLong(2, idCountry);
+        preparedStmt.setString(1, getName());
+        preparedStmt.setLong(2, getCountryID());
 
         preparedStmt.execute();
     }
