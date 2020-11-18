@@ -21,6 +21,9 @@ public class Main {
         Movie movie = new Movie();
         Type type = new Type();
 
+//        type.addTypes(connectToSql.conn);
+//        country.addCountries(connectToSql.conn);
+
         boolean end=true;
         int switcher;
         while(end){
@@ -56,22 +59,16 @@ public class Main {
                     director.selectDirector(connectToSql.conn);
                     break;
                 case 6:
-                    System.out.println("Podaj ID filmu do usuniecia:");
                     movie.deleteMovieByID(connectToSql.conn);
                     break;
                 case 7:
-                    System.out.println("Podaj ID aktora do usuniecia:");
                     actor.deleteActorByID(connectToSql.conn);
                     break;
                 case 8:
-                    System.out.println("Podaj id filmu ktory chcesz zmodyfikowac:");
-                    numberID = scan.nextLong();
-                    movie.updateMovie(connectToSql.conn, numberID);
+                    movie.updateMovie(connectToSql.conn);
                     break;
                 case 9:
-                    System.out.println("Podaj id aktora ktorego chcesz zmodyfikowac:");
-                    numberID = scan.nextLong();
-                    actor.updateActor(connectToSql.conn, numberID);
+                    actor.updateActor(connectToSql.conn);
                     break;
                 case 0:
                     end=false;
