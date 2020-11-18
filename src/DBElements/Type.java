@@ -9,10 +9,12 @@ public class Type {
     long typeID;
 
     public String getName() {
+        System.out.println("Podaj nazwe:");
         return name = scan.nextLine();
     }
 
     public long getTypeID() {
+        System.out.println("Podaj ID:");
         return typeID = scan.nextLong();
     }
 
@@ -26,12 +28,13 @@ public class Type {
 
         preparedStmt.execute();
     }
-    public void deleteTypeByID(Connection conn, long idType) throws SQLException {
+    public void deleteTypeByID(Connection conn) throws SQLException {
 
+        typeID=getTypeID();
         String query = "DELETE FROM Type WHERE ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setLong (1, idType);
+        preparedStmt.setLong (1, typeID);
 
         preparedStmt.execute();
     }
@@ -92,13 +95,13 @@ public class Type {
         preparedStmt = conn.prepareStatement(query);
         preparedStmt.execute();
     }
-    public void updateType(Connection conn, long idType) throws SQLException{
+    public void updateType(Connection conn) throws SQLException{
 
         String query = "UPDATE Type SET name = ? WHERE typeID = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         preparedStmt.setString(1, getName());
-
+        preparedStmt.setLong(2, getTypeID());
 
         preparedStmt.execute();
     }
