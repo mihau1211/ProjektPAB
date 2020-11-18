@@ -10,10 +10,12 @@ public class ActorHasMovie {
     long ahmID;
 
     public long getActorID() {
+        System.out.println("Podaj ID:");
         return actorID = scan.nextLong();
     }
 
     public long getMovieID() {
+        System.out.println("Podaj ID:");
         return movieID = scan.nextLong();
     }
 
@@ -21,24 +23,24 @@ public class ActorHasMovie {
         return ahmID = scan.nextLong();
     }
 
-    public void insertActorHasMovie(Connection conn, long Actor_idActor, long Movie_idMovie) throws SQLException {
+    public void insertActorHasMovie(Connection conn) throws SQLException {
 
         String query = " insert into Actor_Has_Movie (Actor_idActor, Movie_idMovie)"
                 + " values (?, ?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setLong (1, Actor_idActor);
-        preparedStmt.setLong (2, Movie_idMovie);
+        preparedStmt.setLong (1, getActorID());
+        preparedStmt.setLong (2, getMovieID());
 
         preparedStmt.execute();
     }
-    public void deleteActorHasMovie(Connection conn, long idActor, long idMovie) throws SQLException {
+    public void deleteActorHasMovie(Connection conn) throws SQLException {
 
         String query = "DELETE FROM Actor_Has_Movie WHERE Actor_idActor=? AND Movie_idMovie=?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setLong (1, idActor);
-        preparedStmt.setLong (2, idMovie);
+        preparedStmt.setLong (1, getActorID());
+        preparedStmt.setLong (2, getMovieID());
 
         preparedStmt.execute();
     }
