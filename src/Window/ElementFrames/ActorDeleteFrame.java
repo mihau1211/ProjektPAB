@@ -35,6 +35,7 @@ public class ActorDeleteFrame extends JDialog implements ActionListener {
 
     public ActorDeleteFrame() {
         setLayout(null);
+        setModal(true);
 
         errorDialog.setBounds(350,250, 200, 100);
         errorDialog.setLayout(new FlowLayout());
