@@ -36,32 +36,30 @@ public class Actor {
         return actorID = scan.nextLong();
     }
 
-    public void insertActor(Connection conn) throws SQLException {
+    public void insertActor(Connection conn,String name, String surname, String birthDate, long country) throws SQLException {
 
         String query = " insert into Actor (ActorName, ActorSurname, ActorBirthDate, Country_idCountry)"
                 + " values (?, ?, ?, ?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, getName());
-        preparedStmt.setString (2, getSurname());
-        preparedStmt.setString (3, getBirthDate());
-        preparedStmt.setLong (4, getCountry());
+        preparedStmt.setString (1, name);
+        preparedStmt.setString (2, surname);
+        preparedStmt.setString (3, birthDate);
+        preparedStmt.setLong (4, country);
 
         preparedStmt.execute();
     }
-    public void deleteActorByID(Connection conn) throws SQLException {
-
-        actorID=getActorID();
+    public void deleteActorByID(Connection conn, long id) throws SQLException {
 
         String query1 = "DELETE FROM Actor_Has_Movie WHERE Actor_idActor=?;";
         String query2 = "DELETE FROM Actor WHERE idActor=?;";
 
         PreparedStatement preparedStmt1 = conn.prepareStatement(query1);
-        preparedStmt1.setLong(1, actorID);
+        preparedStmt1.setLong(1, id);
         preparedStmt1.execute();
 
         PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
-        preparedStmt2.setLong (1, actorID);
+        preparedStmt2.setLong(1, id);
         preparedStmt2.execute();
     }
     public void deleteActorByName(Connection conn, String ActorName) throws SQLException{
