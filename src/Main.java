@@ -21,7 +21,7 @@ public class Main {
         Movie movie = new Movie();
         Type type = new Type();
 
-//        type.addTypes(connectToSql.conn);
+        type.addTypes(connectToSql.conn);
 //        country.addCountries(connectToSql.conn);
 
         boolean end=true;
@@ -40,42 +40,42 @@ public class Main {
             System.out.println("| 0. Wyjdz");
             System.out.println("================================================================================");
 
-            long numberID;
-            switcher = scan.nextInt();
-            switch(switcher){
-                case 1:
-                    movie.insertMovie(connectToSql.conn);
-                    break;
-                case 2:
-                    actor.insertActor(connectToSql.conn);
-                    break;
-                case 3:
-                    movie.selectMovie(connectToSql.conn);
-                    break;
-                case 4:
-                    actor.selectActor(connectToSql.conn);
-                    break;
-                case 5:
-                    director.selectDirector(connectToSql.conn);
-                    break;
-                case 6:
-                    movie.deleteMovieByID(connectToSql.conn);
-                    break;
-                case 7:
-                    actor.deleteActorByID(connectToSql.conn);
-                    break;
-                case 8:
-                    movie.updateMovie(connectToSql.conn);
-                    break;
-                case 9:
-                    actor.updateActor(connectToSql.conn);
-                    break;
-                case 0:
-                    end=false;
-                    System.out.println("Bye!!!!!!!!!");
-                    break;
-
-            }
+//            long numberID;
+//            switcher = scan.nextInt();
+//            switch(switcher){
+//                case 1:
+//                    movie.insertMovie(connectToSql.conn);
+//                    break;
+//                case 2:
+//                    actor.insertActor(connectToSql.conn);
+//                    break;
+//                case 3:
+//                    movie.selectMovie(connectToSql.conn);
+//                    break;
+//                case 4:
+//                    actor.selectActor(connectToSql.conn);
+//                    break;
+//                case 5:
+//                    director.selectDirector(connectToSql.conn);
+//                    break;
+//                case 6:
+//                    movie.deleteMovieByID(connectToSql.conn);
+//                    break;
+//                case 7:
+//                    actor.deleteActorByID(connectToSql.conn);
+//                    break;
+//                case 8:
+//                    movie.updateMovie(connectToSql.conn);
+//                    break;
+//                case 9:
+//                    actor.updateActor(connectToSql.conn);
+//                    break;
+//                case 0:
+//                    end=false;
+//                    System.out.println("Bye!!!!!!!!!");
+//                    break;
+//
+//            }
         }
     }
 }
