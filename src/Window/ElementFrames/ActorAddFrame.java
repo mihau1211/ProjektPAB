@@ -55,11 +55,14 @@ public class ActorAddFrame extends JDialog implements ActionListener {
 
     public ActorAddFrame() {
         setLayout(null);
+        setModal(true);
 
         errorDialog.setBounds(350,250, 200, 100);
         errorDialog.setLayout(new FlowLayout(FlowLayout.CENTER));
+        errorDialog.setModal(true);
         confirmDialog.setBounds(350,250, 230, 100);
         confirmDialog.setLayout(new FlowLayout(FlowLayout.CENTER));
+        confirmDialog.setModal(true);
 
         nameField.setBounds(150, 50, 300, 30);
         surnameField.setBounds(150, 100, 300, 30);
