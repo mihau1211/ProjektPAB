@@ -2,6 +2,8 @@ package Window;
 
 import Connection.ConnectToSql;
 import DBElements.*;
+import Window.ElementFrames.ActorAddFrame;
+import Window.ElementFrames.ActorDeleteFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,7 +24,10 @@ public class MainFrame extends JFrame implements ActionListener {
     DBElements.Type type= new DBElements.Type();
     ActorHasMovie actorHasMovie= new ActorHasMovie();
 
-    JFrame frameActor = new JFrame();
+    JDialog jDialog;
+
+    ActorAddFrame actorAddFrame;
+    ActorDeleteFrame actorDeleteFrame;
 
     ConnectToSql connectToSql = new ConnectToSql();
     public MainFrame() {
@@ -41,9 +46,6 @@ public class MainFrame extends JFrame implements ActionListener {
             }
         }
 
-
-
-
         setJMenuBar(mb.mb);
         setLayout(null);
         setVisible(true);
@@ -57,24 +59,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
         //insert
         if(source==mb.menus[0].getItem(0)){
-            frameActor.setTitle("ACTOR");
-            frameActor.setBounds(700,200,700,500);
-            frameActor.setVisible(true);
-            try {
-                actor.insertActor(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            actorAddFrame = new ActorAddFrame();
         }
         if(source==mb.menus[0].getItem(1)){
-            frameActor.setTitle("ACTOR");
-            frameActor.setBounds(700,200,700,500);
-            frameActor.setVisible(true);
-            try {
-                director.insertDirector(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            System.out.println("xasdasdasdas");
         }
         if(source==mb.menus[0].getItem(2)){
             try {
@@ -108,11 +96,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         //delete
         if(source==mb.menus[1].getItem(0)){
-            try {
-                actor.deleteActorByID(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            actorDeleteFrame = new ActorDeleteFrame();
         }
         if(source==mb.menus[1].getItem(1)){
             try {
