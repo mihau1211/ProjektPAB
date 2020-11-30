@@ -1,6 +1,7 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Actor {
@@ -8,32 +9,69 @@ public class Actor {
     String name;
     String surname;
     String birthDate;
+    String countryName;
     long countryID;
     long actorID;
 
     public String getName() {
-        System.out.println("Podaj imie:");
-        return name = scan.nextLine();
+        return name;
     }
 
     public String getSurname() {
-        System.out.println("Podaj nazwisko:");
-        return surname = scan.nextLine();
+        return surname;
     }
 
     public String getBirthDate() {
-        System.out.println("Podaj date urodzenia:");
-        return birthDate = scan.nextLine();
+        return birthDate;
     }
 
     public long getCountry() {
-        System.out.println("Podaj kraj pochodzenia:");
-        return countryID = scan.nextLong();
+        return countryID;
     }
 
     public long getActorID() {
-        System.out.println("Podaj ID:");
-        return actorID = scan.nextLong();
+        return actorID;
+    }
+
+    public String getCountryName(){
+        return countryName;
+    }
+
+    public Actor(String name, String surname, String birthdate, long countryID, String countryName, long actorID){
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthdate;
+        this.countryID = countryID;
+        this.countryName = countryName;
+        this.actorID = actorID;
+    }
+
+    public Actor(){
+
+    }
+
+    public String toString(){
+        return name+"/"+surname+"/"+birthDate+"/"+countryID+"/"+actorID;
+    }
+
+    public ArrayList<Actor> getActors(Connection conn){
+        ArrayList<Actor> actors = new ArrayList<Actor>();
+
+        String query = "SELECT * FROM Actor, Country WHERE Country_idCountry=idCountry ";
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                Actor actor = new Actor(rs.getString("ActorName"),rs.getString("ActorSurname"),rs.getString("ActorBirthDate"), rs.getLong("Country_idCountry"), rs.getString("CountryName"), rs.getLong("idActor"));
+                actors.add(actor);
+            }
+            return actors;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
     }
 
     public void insertActor(Connection conn,String name, String surname, String birthDate, long country) throws SQLException {
@@ -91,16 +129,15 @@ public class Actor {
             System.out.format("|%1$-5s|%2$-20s|%3$-23s|%4$-11s|%5$-13s|\n", id, name, surname, year, country);
         }
     }
-    public void updateActor(Connection conn) throws SQLException{
+    public void updateActor(Connection conn, String name, String surname, String birthDate, long countryID, long actorID) throws SQLException{
 
-        actorID=getActorID();
         String query = "UPDATE Actor SET ActorName = ?, ActorSurname = ?, ActorBirthDate = ?, Country_idCountry = ? WHERE idActor = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, getName());
-        preparedStmt.setString(1, getSurname());
-        preparedStmt.setString(3, getBirthDate());
-        preparedStmt.setLong(4, getCountry());
+        preparedStmt.setString(1, name);
+        preparedStmt.setString(2, surname);
+        preparedStmt.setString(3, birthDate);
+        preparedStmt.setLong(4, countryID);
         preparedStmt.setLong(5, actorID);
 
         preparedStmt.execute();
