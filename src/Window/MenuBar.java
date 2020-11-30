@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 import Connection.*;
 
 public class MenuBar{
-    String[] tables = {"ACTOR", "DIRECTOR", "MOVIE", "COUNTRY", "TYPE", "AHM"};
-    String[] items = {"ADD","DELETE","SELECT","UPDATE"};
+    String[] tables = {"Actor", "Director", "Movie", "Country", "Type", "AHM"};
+    String[] items = {"Add","Delete","Select","Update"};
     JMenuBar mb = new JMenuBar();
     JMenu menus[] = new JMenu[items.length];
 
