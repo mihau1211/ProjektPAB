@@ -4,8 +4,12 @@ import Connection.ConnectToSql;
 import DBElements.*;
 import Window.ElementFrames.ActorAddFrame;
 import Window.ElementFrames.ActorDeleteFrame;
+import Window.ElementFrames.ActorSelectFrame;
+import Window.ElementFrames.ActorUpdateFrame;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,24 +19,30 @@ import java.util.ArrayList;
 
 public class MainFrame extends JFrame implements ActionListener {
 
+    JPanel statusPanel = new JPanel();
+
+    JLabel statusLabel = new JLabel();
 
     MenuBar mb = new MenuBar();
-    Actor actor = new Actor();
-    Director director=new Director();
-    Movie movie=new Movie();
-    Country country=new Country();
-    DBElements.Type type= new DBElements.Type();
-    ActorHasMovie actorHasMovie= new ActorHasMovie();
-
-    JDialog jDialog;
 
     ActorAddFrame actorAddFrame;
     ActorDeleteFrame actorDeleteFrame;
+    ActorUpdateFrame actorUpdateFrame;
+    ActorSelectFrame actorSelectFrame;
 
     ConnectToSql connectToSql = new ConnectToSql();
     public MainFrame() {
         super("Baza filmowa");
+        setLayout(new BorderLayout());
         connectToSql.startConnection();
+
+        statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        add(statusPanel, BorderLayout.SOUTH);
+        statusPanel.setPreferredSize(new Dimension(getWidth(), 16));
+        statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+        statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        statusPanel.add(statusLabel);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700,500);
 
@@ -47,7 +57,6 @@ public class MainFrame extends JFrame implements ActionListener {
         }
 
         setJMenuBar(mb.mb);
-        setLayout(null);
         setVisible(true);
     }
 
@@ -60,159 +69,83 @@ public class MainFrame extends JFrame implements ActionListener {
         //insert
         if(source==mb.menus[0].getItem(0)){
             actorAddFrame = new ActorAddFrame();
+            statusLabel.setText(actorAddFrame.getMessage());
         }
         if(source==mb.menus[0].getItem(1)){
-            System.out.println("xasdasdasdas");
+
         }
         if(source==mb.menus[0].getItem(2)){
-            try {
-                movie.insertMovie(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[0].getItem(3)){
-            try {
-                country.insertCountry(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
 
         if(source==mb.menus[0].getItem(4)){
-            try {
-                type.insertType(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[0].getItem(5)){
-            try {
-                actorHasMovie.insertActorHasMovie(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
 
         //delete
         if(source==mb.menus[1].getItem(0)){
             actorDeleteFrame = new ActorDeleteFrame();
+            statusLabel.setText(actorDeleteFrame.getMessage());
         }
         if(source==mb.menus[1].getItem(1)){
-            try {
-                director.deleteDirectorByID(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[1].getItem(2)){
-            try {
-                movie.deleteMovieByID(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[1].getItem(3)){
-            try {
-                country.deleteCountryByID(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[1].getItem(4)){
-            try {
-                type.deleteTypeByID(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[1].getItem(5)){
-            try {
-                actorHasMovie.deleteActorHasMovie(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
 
         //select
         if(source==mb.menus[2].getItem(0)){
-            try {
-                actor.selectActor(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            actorSelectFrame = new ActorSelectFrame();
+            statusLabel.setText(actorSelectFrame.getMessage());
         }
         if(source==mb.menus[2].getItem(1)){
-            try {
-                director.selectDirector(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[2].getItem(2)){
-            try {
-                movie.selectMovie(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[2].getItem(3)){
-            try {
-                country.selectCountry(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[2].getItem(4)){
-            try {
-                type.selectType(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[2].getItem(5)){
-            try {
-                actorHasMovie.selectActorHasMovie(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
 
         //update
         if(source==mb.menus[3].getItem(0)){
-            try {
-                actor.updateActor(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            actorUpdateFrame = new ActorUpdateFrame();
+            statusLabel.setText(actorUpdateFrame.getMessage());
         }
         if(source==mb.menus[3].getItem(1)){
-            try {
-                director.updateDirector(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[3].getItem(2)){
-            try {
-                movie.updateMovie(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[3].getItem(3)){
-            try {
-                country.updateCountry(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
         if(source==mb.menus[3].getItem(4)){
-            try {
-                type.updateType(connectToSql.conn);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
 
 
