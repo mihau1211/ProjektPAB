@@ -2,19 +2,24 @@ package Window.ElementFrames;
 
 import Connection.ConnectToSql;
 import DBElements.Actor;
+import DBElements.Country;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ActorAddFrame extends JDialog implements ActionListener {
     ConnectToSql connectToSql = new ConnectToSql();
     Actor actor = new Actor();
+    Country country = new Country();
 
-    JDialog errorDialog = new JDialog(this);
-    JDialog confirmDialog = new JDialog(this);
+    ArrayList<Country> countries = new ArrayList<Country>();
+
+    JComboBox countryComboBox;
 
     JTextField nameField = new JTextField();
     JTextField surnameField = new JTextField();
@@ -22,8 +27,6 @@ public class ActorAddFrame extends JDialog implements ActionListener {
     JTextField countryField = new JTextField();
 
     JButton okButton = new JButton("OK");
-    JButton errorButton = new JButton("OK");
-    JButton confirmButton = new JButton("OK");
 
     JLabel title = new JLabel("To add actor type data in boxes below.");
     JLabel nameLabel = new JLabel("Name:");
@@ -31,10 +34,17 @@ public class ActorAddFrame extends JDialog implements ActionListener {
     JLabel birthdateLabel = new JLabel("Birthdate:");
     JLabel countryLabel = new JLabel("Country:");
 
+    String comboCountryNames[];
     String name;
     String surname;
     String birthdate;
-    long country;
+    long countryID = 1;
+
+    String message;
+
+    public void setMessage(String message){
+        this.message = message;
+    }
 
     @Override
     public String getName() {
@@ -53,26 +63,37 @@ public class ActorAddFrame extends JDialog implements ActionListener {
         return Long.parseLong(countryField.getText());
     }
 
+    public String getMessage(){
+        return message;
+    }
+
     public ActorAddFrame() {
         setLayout(null);
         setModal(true);
+        setTitle("Add Actor");
+        connectToSql.startConnection();
 
-        errorDialog.setBounds(350,250, 200, 100);
-        errorDialog.setLayout(new FlowLayout(FlowLayout.CENTER));
-        errorDialog.setModal(true);
-        confirmDialog.setBounds(350,250, 230, 100);
-        confirmDialog.setLayout(new FlowLayout(FlowLayout.CENTER));
-        confirmDialog.setModal(true);
+
+        try {
+            countries = country.getCountries(connectToSql.conn);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        comboCountryNames = new String[countries.size()];
+        for (int i=0; i<countries.size(); i++){
+            comboCountryNames[i] = countries.get(i).getName();
+        }
+
+        countryComboBox = new JComboBox(comboCountryNames);
+        countryComboBox.setBounds(150, 200, 300, 30);
+        countryComboBox.addActionListener(this);
 
         nameField.setBounds(150, 50, 300, 30);
         surnameField.setBounds(150, 100, 300, 30);
         birthdateField.setBounds(150, 150, 300, 30);
-        countryField.setBounds(150, 200, 300, 30);
 
         okButton.setBounds(230, 250, 120, 40);
         okButton.addActionListener(this);
-        errorButton.addActionListener(this);
-        confirmButton.addActionListener(this);
 
         title.setBounds(50,20,400,30);
         nameLabel.setBounds(50,50,70,30);
@@ -85,12 +106,9 @@ public class ActorAddFrame extends JDialog implements ActionListener {
         add(birthdateField);
         add(countryField);
 
-        add(okButton);
+        add(countryComboBox);
 
-        confirmDialog.add(new JLabel("You add new actor into database!"));
-        confirmDialog.add(confirmButton);
-        errorDialog.add(new JLabel("ERROR: WRONG DATA"));
-        errorDialog.add(errorButton);
+        add(okButton);
 
         add(title);
         add(nameLabel);
@@ -100,7 +118,6 @@ public class ActorAddFrame extends JDialog implements ActionListener {
 
         setSize(500,350);
         setVisible(true);
-
     }
 
     @Override
@@ -109,25 +126,23 @@ public class ActorAddFrame extends JDialog implements ActionListener {
         name = getName();
         surname = getSurname();
         birthdate = getBirthdate();
-        country = getCountry();
 
         if (source==okButton){
-            connectToSql.startConnection();
             try {
-                actor.insertActor(connectToSql.conn, name, surname, birthdate, country);
-                confirmDialog.setVisible(true);
+                actor.insertActor(connectToSql.conn, name, surname, birthdate, countryID);
+                setMessage("Actor has been updated.");
+                dispose();
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
-                errorDialog.setVisible(true);
+                setMessage("ERROR: You typed wrong data.");
+                dispose();
             }
         }
 
-        if (source==errorButton){
-            dispose();
+        if (source==countryComboBox){
+            int counter;
+            counter = countryComboBox.getSelectedIndex();
+            countryID = countries.get(counter).getCountryID();
         }
 
-        if (source==confirmButton){
-            dispose();
-        }
     }
 }
