@@ -1,6 +1,7 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Country {
@@ -9,12 +10,25 @@ public class Country {
     long countryID;
 
     public String getName() {
-        return name = scan.nextLine();
+        return name;
     }
 
     public long getCountryID() {
-        System.out.println("Podaj ID:");
-        return countryID = scan.nextLong();
+        return countryID;
+    }
+
+    public Country(long countryID, String name){
+        this.countryID = countryID;
+        this.name = name;
+    }
+
+    public Country(){
+
+    }
+
+    @Override
+    public String toString(){
+        return countryID + " / " + name;
     }
 
     public void insertCountry(Connection conn) throws SQLException {
@@ -61,6 +75,19 @@ public class Country {
             System.out.format("|%1$-5s|%2$-20s|\n", id, name);
         }
     }
+    public ArrayList<Country> getCountries(Connection conn) throws SQLException {
+        ArrayList<Country> countries = new ArrayList<Country>();
+
+        String query = "SELECT * FROM Country";
+
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        while (rs.next()){
+            Country country = new Country(rs.getLong("idCountry"), rs.getString("CountryName"));
+            countries.add(country);
+        }
+        return countries;
+    }
     public void updateCountry(Connection conn) throws SQLException{
 
         String query = "UPDATE Country SET CountryName = ? WHERE idCOuntry = ?;";
@@ -71,8 +98,6 @@ public class Country {
 
         preparedStmt.execute();
     }
-
-
     public void addCountries(Connection conn) throws SQLException {
         String query = "insert into Country (countryName)"
                 + " values ('POLAND')";
