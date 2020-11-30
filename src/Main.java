@@ -21,7 +21,7 @@ public class Main {
         Movie movie = new Movie();
         Type type = new Type();
 
-        type.addTypes(connectToSql.conn);
+//        type.addTypes(connectToSql.conn);
 //        country.addCountries(connectToSql.conn);
 
         boolean end=true;
