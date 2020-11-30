@@ -5,66 +5,79 @@ import DBElements.Actor;
 import Window.MainFrame;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.concurrent.Flow;
 
 public class ActorDeleteFrame extends JDialog implements ActionListener {
     ConnectToSql connectToSql = new ConnectToSql();
     Actor actor = new Actor();
-
-    JDialog errorDialog = new JDialog(this);
-    JDialog confirmDialog = new JDialog(this);
-
-    JTextField idField = new JTextField();
+    ArrayList<Actor> actors = new ArrayList<Actor>();
 
     JButton okButton = new JButton("OK");
-    JButton errorButton = new JButton("OK");
-    JButton confirmButton = new JButton("OK");
 
-    JLabel title = new JLabel("To remove actor type ID in box below.");
-    JLabel idLabel = new JLabel("ID:");
+    JTable table;
 
+    String message;
+    String[] columnNames = {"ID","Name","Surname","Birthdate","Country"};
     long id;
 
-    public long getID() {
-        return Long.parseLong(idField.getText());
+    public void setMessage(String message){
+        this.message = message;
+    }
+
+    public String getMessage(){
+        return message;
     }
 
     public ActorDeleteFrame() {
         setLayout(null);
         setModal(true);
+        setTitle("Delete Actor");
+        connectToSql.startConnection();
 
-        errorDialog.setBounds(350,250, 200, 100);
-        errorDialog.setLayout(new FlowLayout());
-        confirmDialog.setBounds(350,250, 230, 100);
-        confirmDialog.setLayout(new FlowLayout());
-
-        idField.setBounds(150, 50, 300, 30);
-
-        okButton.setBounds(230, 100, 120, 40);
+        okButton.setBounds(180, 360, 120, 40);
         okButton.addActionListener(this);
-        errorButton.addActionListener(this);
-        confirmButton.addActionListener(this);
 
-        title.setBounds(50,20,400,30);
-        idLabel.setBounds(50,50,70,30);
+        actors = actor.getActors(connectToSql.conn);
+        Object[][] rows = new Object[actors.size()][5];
+        for (int i=0; i<actors.size(); i++){
+            for (int j=0; j<5; j++){
+                if (j==0)rows[i][j] = actors.get(i).getActorID();
+                if (j==1)rows[i][j] = actors.get(i).getName();
+                if (j==2)rows[i][j] = actors.get(i).getSurname();
+                if (j==3)rows[i][j] = actors.get(i).getBirthDate();
+                if (j==4)rows[i][j] = actors.get(i).getCountryName();
+            }
+        }
 
-        add(idField);
+        table = new JTable(rows, columnNames);
+        table.setPreferredScrollableViewportSize(new Dimension(500,50));
+        table.setFillsViewportHeight(true);
+
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (table.getSelectedRow() > -1) {
+                    id= Long.parseLong(table.getValueAt(table.getSelectedRow(), 0).toString());
+                    System.out.println(id);
+                }
+            }
+        });
+
+        JScrollPane pane = new JScrollPane(table);
+        pane.setBounds(40,50,400, 300);
+        pane.setVisible(true);
+        add(pane);
 
         add(okButton);
 
-        confirmDialog.add(new JLabel("You delete actor from database!"));
-        confirmDialog.add(confirmButton);
-        errorDialog.add(new JLabel("ERROR: WRONG DATA"));
-        errorDialog.add(errorButton);
-
-        add(title);
-        add(idLabel);
-
-        setSize(500,200);
+        setSize(500,500);
         setVisible(true);
 
     }
@@ -72,25 +85,17 @@ public class ActorDeleteFrame extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        id = getID();
 
         if (source==okButton){
-            connectToSql.startConnection();
             try {
                 actor.deleteActorByID(connectToSql.conn, id);
-                confirmDialog.setVisible(true);
+                setMessage("Actor has been removed.");
+                dispose();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-                errorDialog.setVisible(true);
+                setMessage("ERROR: You typed wrong data.");
+                dispose();
             }
-        }
-
-        if (source==errorButton){
-            dispose();
-        }
-
-        if (source==confirmButton){
-            dispose();
         }
     }
 }
