@@ -1,6 +1,7 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Type {
@@ -9,13 +10,39 @@ public class Type {
     long typeID;
 
     public String getName() {
-        System.out.println("Podaj nazwe:");
-        return name = scan.nextLine();
+        return name;
     }
 
     public long getTypeID() {
-        System.out.println("Podaj ID:");
-        return typeID = scan.nextLong();
+        return typeID;
+    }
+
+    public Type(){
+
+    }
+
+    public Type(String name, long typeID) {
+        this.name = name;
+        this.typeID = typeID;
+    }
+
+    @Override
+    public String toString(){
+        return typeID + " / " + name;
+    }
+
+    public ArrayList<Type> getTypes(Connection conn) throws SQLException {
+        ArrayList<Type> types = new ArrayList<Type>();
+
+        String query = "SELECT * FROM Type";
+
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        while (rs.next()){
+            Type type = new Type(rs.getString("TypeName"),rs.getLong("idType"));
+            types.add(type);
+        }
+        return types;
     }
 
     public void insertType(Connection conn) throws SQLException {
