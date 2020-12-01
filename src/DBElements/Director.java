@@ -1,6 +1,7 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Director {
@@ -10,42 +11,72 @@ public class Director {
     String birthDate;
     long countryID;
     long directorID;
+    String countryName;
 
     public String getName() {
-        System.out.println("Podaj imie:");
-        return name = scan.nextLine();
+        return name;
     }
 
     public String getSurname() {
-        System.out.println("Podaj nazwisko:");
-        return surname = scan.nextLine();
+        return surname;
     }
 
     public String getBirthDate() {
-        System.out.println("Podaj date urodzenia:");
-        return birthDate = scan.nextLine();
+        return birthDate;
     }
 
     public long getCountryID() {
-        System.out.println("Podaj ID kraju:");
-        return countryID = scan.nextLong();
+        return countryID;
     }
 
     public long getDirectorID() {
-        System.out.println("Podaj ID:");
-        return directorID = scan.nextLong();
+        return directorID;
     }
 
-    public void insertDirector(Connection conn) throws SQLException {
+    @Override
+    public String toString(){
+        return directorID + " / " + name + " / " + surname + " / " + birthDate + " / " + countryID;
+    }
+
+    public Director(String name, String surname, String birthDate, long countryID, long directorID, String countryName) {
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+        this.countryID = countryID;
+        this.directorID = directorID;
+        this.countryName = countryName;
+    }
+
+    public Director(){
+
+    }
+
+    public ArrayList<Director> getDirectors (Connection conn) throws SQLException {
+        ArrayList<Director> directors = new ArrayList<Director>();
+
+        String query = "SELECT * FROM Director, Country WHERE Country_idCountry=idCountry";
+
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(query);
+        while (rs.next()){
+            Director director = new Director(rs.getString("DirectorName"),rs.getString("DirectorSurname"),
+                    rs.getString("DirectorBirthDate"),rs.getLong("Country_idCountry"),rs.getLong("idDirector"),
+                    rs.getString("CountryName"));
+            directors.add(director);
+        }
+        return directors;
+    }
+
+    public void insertDirector(Connection conn,String name, String surname, String birthDate, long country) throws SQLException {
 
         String query = " insert into Director (DirectorName, DirectorSurname, DirectorBirthDate, Country_idCountry)"
                 + " values (?, ?, ?, ?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, getName());
-        preparedStmt.setString (2, getSurname());
-        preparedStmt.setString (3, getBirthDate());
-        preparedStmt.setLong (4, getCountryID());
+        preparedStmt.setString (1, name);
+        preparedStmt.setString (2, surname);
+        preparedStmt.setString (3, birthDate);
+        preparedStmt.setLong (4, country);
 
         preparedStmt.execute();
     }
