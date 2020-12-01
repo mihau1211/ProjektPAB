@@ -1,6 +1,7 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Movie {
@@ -12,58 +13,111 @@ public class Movie {
     long directorID;
     long countryID;
     long movieID;
+    String countryName;
+    String directorName;
+    String typeName;
 
     public String getName() {
-        System.out.println("Podaj nazwe filmu:");
-        return name = scan.nextLine();
+        return name;
     }
 
     public String getYear() {
-        System.out.println("Podaj rok produkcji:");
-        return year = scan.nextLine();
+        return year;
     }
 
     public int getRating() {
-        System.out.println("Podaj ocene:");
-        return rating = scan.nextInt();
+        return rating;
     }
 
     public long getTypeID() {
-        System.out.println("Podaj id gatunku:");
-        return typeID = scan.nextLong();
+        return typeID;
     }
 
     public long getDirectorID() {
-        System.out.println("Podaj rezysera:");
-        return directorID = scan.nextLong();
+        return directorID;
     }
 
     public long getCountry() {
-        System.out.println("Podaj id kraju produkcji:");
-        return countryID = scan.nextLong();
+        return countryID;
     }
 
     public long getMovieID() {
-        return movieID = scan.nextLong();
+        return movieID;
     }
 
-    public void insertMovie(Connection conn) throws SQLException {
+    public String getCountryName(){return countryName;}
+
+    public String getDirectorName() {
+        return directorName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    @Override
+    public String toString(){
+        return movieID + " / " + name + " / " + year + " / " + rating + " / " + typeID + " / " + directorID + " / " + countryID;
+    }
+
+    public Movie(String name, String year, int rating, long typeID, long directorID, long countryID, long movieID, String countryName, String directorName, String typeName) {
+        this.name = name;
+        this.year = year;
+        this.rating = rating;
+        this.typeID = typeID;
+        this.directorID = directorID;
+        this.countryID = countryID;
+        this.movieID = movieID;
+        this.countryName = countryName;
+        this.directorName = directorName;
+        this.typeName = typeName;
+    }
+
+    public Movie(){
+
+    }
+
+    public ArrayList<Movie> getMovies(Connection conn){
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+
+//        String query = "SELECT * FROM Movie, Country, Type, Director WHERE Country_idCountry=idCountry OR Type_idType=idType OR Director_idDirector=idDirector";
+        String query = "select * from Movie join Country ON Country_idCountry=idCountry join Type ON Type_idType=idType join Director ON Director_idDirector=idDirector;";
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                Movie movie = new Movie(rs.getString("MovieName"), rs.getString("MovieYear"), rs.getInt("MovieRating"),
+                        rs.getLong("Type_idType"), rs.getLong("Director_idDirector"), rs.getLong("Country_idCountry"),
+                        rs.getLong("idMovie"), rs.getString("CountryName"), rs.getString("DirectorName"),
+                        rs.getString("TypeName"));
+                movies.add(movie);
+            }
+            return movies;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void insertMovie(Connection conn, String name, String year, int rating, long countryID, long typeID, long directorID) throws SQLException {
 
         String query = " insert into Movie (movieName, movieYear, movieRating, Country_idCountry, Type_idType, " +
                 "Director_idDirector)"
                 + " values (?,?,?,?,?,?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, getName());
-        preparedStmt.setString (2, getYear());
-        preparedStmt.setInt   (3, getRating());
-        preparedStmt.setLong(4, getCountry());
-        preparedStmt.setLong(5, getTypeID());
-        preparedStmt.setLong(6, getDirectorID());
+        preparedStmt.setString (1, name);
+        preparedStmt.setString (2, year);
+        preparedStmt.setInt   (3, rating);
+        preparedStmt.setLong(4, countryID);
+        preparedStmt.setLong(5, typeID);
+        preparedStmt.setLong(6, directorID);
 
         preparedStmt.execute();
     }
-    public void deleteMovieByID(Connection conn) throws SQLException {
+    public void deleteMovieByID(Connection conn, long id) throws SQLException {
 
         movieID=getMovieID();
 
@@ -71,11 +125,11 @@ public class Movie {
         String query2 = "DELETE FROM Movie WHERE idMovie=?;";
 
         PreparedStatement preparedStmt1 = conn.prepareStatement(query1);
-        preparedStmt1.setLong(1, movieID);
+        preparedStmt1.setLong(1, id);
         preparedStmt1.execute();
 
         PreparedStatement preparedStmt2 = conn.prepareStatement(query2);
-        preparedStmt2.setLong (1, movieID);
+        preparedStmt2.setLong (1, id);
         preparedStmt2.execute();
     }
     public void deleteMovieByName(Connection conn, String MovieName) throws SQLException{
@@ -106,19 +160,19 @@ public class Movie {
             System.out.format("|%1$-5s|%2$-6s|%3$-11s|%4$-12s|%5$-13s|\n",id,  rating, name, year, type);
         }
     }
-    public void updateMovie(Connection conn) throws SQLException{
+    public void updateMovie(Connection conn, String name, String year, int rating, long countryID, long typeID, long directorID, long movieID) throws SQLException{
 
         String query = "UPDATE Movie SET MovieName = ?, MovieYear = ?, MovieRating = ?, Country_idCountry = ?," +
                 " Type_idType = ?, Director_idDirector = ? WHERE idMovie = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, getName());
-        preparedStmt.setString(2, getYear());
-        preparedStmt.setInt(3, getRating());
-        preparedStmt.setLong(4, getCountry());
-        preparedStmt.setLong(5, getTypeID());
-        preparedStmt.setLong(6, getDirectorID());
-        preparedStmt.setLong(7, getMovieID());
+        preparedStmt.setString (1, name);
+        preparedStmt.setString (2, year);
+        preparedStmt.setInt   (3, rating);
+        preparedStmt.setLong(4, countryID);
+        preparedStmt.setLong(5, typeID);
+        preparedStmt.setLong(6, directorID);
+        preparedStmt.setLong(7, movieID);
 
         preparedStmt.execute();
     }
