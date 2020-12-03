@@ -1,5 +1,6 @@
 package DBElements;
 
+import java.nio.channels.ScatteringByteChannel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,7 +22,7 @@ public class Type {
 
     }
 
-    public Type(String name, long typeID) {
+    public Type(long typeID, String name) {
         this.name = name;
         this.typeID = typeID;
     }
@@ -31,33 +32,38 @@ public class Type {
         return typeID + " / " + name;
     }
 
-    public ArrayList<Type> getTypes(Connection conn) throws SQLException {
+    public ArrayList<Type> getTypes(Connection conn){
         ArrayList<Type> types = new ArrayList<Type>();
 
         String query = "SELECT * FROM Type";
 
-        Statement statement = conn.createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        while (rs.next()){
-            Type type = new Type(rs.getString("TypeName"),rs.getLong("idType"));
-            types.add(type);
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                Type type = new Type(rs.getLong("idType"),rs.getString("TypeName"));
+                types.add(type);
+            }
+            return types;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return types;
+        return null;
     }
 
-    public void insertType(Connection conn) throws SQLException {
+    public void insertType(Connection conn, String name) throws SQLException {
 
         String query = " insert into Type (TypeName)"
                 + " values (?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, getName());
+        preparedStmt.setString (1, name);
 
         preparedStmt.execute();
     }
-    public void deleteTypeByID(Connection conn) throws SQLException {
+    public void deleteTypeByID(Connection conn, long typeID) throws SQLException {
 
-        typeID=getTypeID();
         String query = "DELETE FROM Type WHERE ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -122,13 +128,13 @@ public class Type {
         preparedStmt = conn.prepareStatement(query);
         preparedStmt.execute();
     }
-    public void updateType(Connection conn) throws SQLException{
+    public void updateType(Connection conn, String name, long id) throws SQLException{
 
-        String query = "UPDATE Type SET name = ? WHERE typeID = ?;";
+        String query = "UPDATE Type SET TypeName = ? WHERE idType = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, getName());
-        preparedStmt.setLong(2, getTypeID());
+        preparedStmt.setString(1, name);
+        preparedStmt.setLong(2, id);
 
         preparedStmt.execute();
     }
