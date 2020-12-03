@@ -18,7 +18,7 @@ public class DirectorAddFrame extends JDialog implements ActionListener {
     Director director = new Director();
     Country country = new Country();
 
-    ArrayList<Country> countries = new ArrayList<Country>();
+    ArrayList<Country> countries;
 
     JComboBox countryComboBox;
 
@@ -28,7 +28,7 @@ public class DirectorAddFrame extends JDialog implements ActionListener {
 
     JButton okButton = new JButton("OK");
 
-    JLabel title = new JLabel("To add actor type data in boxes below.");
+    JLabel title = new JLabel("To add director type data in boxes below.");
     JLabel nameLabel = new JLabel("Name:");
     JLabel surnameLabel = new JLabel("Surname:");
     JLabel birthdateLabel = new JLabel("Birthdate:");
@@ -70,11 +70,9 @@ public class DirectorAddFrame extends JDialog implements ActionListener {
         connectToSql.startConnection();
 
 
-        try {
-            countries = country.getCountries(connectToSql.conn);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+
+        countries = country.getCountries(connectToSql.conn);
+
         comboCountryNames = new String[countries.size()];
         for (int i=0; i<countries.size(); i++){
             comboCountryNames[i] = countries.get(i).getName();
