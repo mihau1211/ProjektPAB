@@ -96,32 +96,24 @@ public class MovieAddFrame extends JDialog implements ActionListener {
         connectToSql.startConnection();
 
 
-        try {
-            countries = country.getCountries(connectToSql.conn);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+
+        countries = country.getCountries(connectToSql.conn);
+
         comboCountryNames = new String[countries.size()];
         for (int i=0; i<countries.size(); i++){
             comboCountryNames[i] = countries.get(i).getName();
         }
 
-        try {
-            directors = director.getDirectors(connectToSql.conn);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        directors = director.getDirectors(connectToSql.conn);
+
         comboDirectorNames = new String[directors.size()];
         for (int i=0; i<directors.size(); i++){
             comboDirectorNames[i] = directors.get(i).getName();
         }
         directorID = directors.get(0).getDirectorID();
 
-        try {
-            types = type.getTypes(connectToSql.conn);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        types = type.getTypes(connectToSql.conn);
+
         comboTypeNames = new String[types.size()];
         for (int i=0; i<types.size(); i++){
             comboTypeNames[i] = types.get(i).getName();
