@@ -1,15 +1,14 @@
 package Window;
 
 import Connection.ConnectToSql;
-import Window.ElementFrames.Actor.ActorAddFrame;
-import Window.ElementFrames.Actor.ActorDeleteFrame;
-import Window.ElementFrames.Actor.ActorSelectFrame;
-import Window.ElementFrames.Actor.ActorUpdateFrame;
-import Window.ElementFrames.Director.DirectorAddFrame;
-import Window.ElementFrames.Movie.MovieAddFrame;
-import Window.ElementFrames.Movie.MovieDeleteFrame;
-import Window.ElementFrames.Movie.MovieSelectFrame;
-import Window.ElementFrames.Movie.MovieUpdateFrame;
+import Window.ElementFrames.Actor.*;
+import Window.ElementFrames.Country.*;
+import Window.ElementFrames.Director.*;
+import Window.ElementFrames.Movie.*;
+import Window.ElementFrames.Type.TypeAddFrame;
+import Window.ElementFrames.Type.TypeDeleteFrame;
+import Window.ElementFrames.Type.TypeSelectFrame;
+import Window.ElementFrames.Type.TypeUpdateFrame;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -31,11 +30,24 @@ public class MainFrame extends JFrame implements ActionListener {
     ActorSelectFrame actorSelectFrame;
 
     DirectorAddFrame directorAddFrame;
+    DirectorDeleteFrame directorDeleteFrame;
+    DirectorSelectFrame directorSelectFrame;
+    DirectorUpdateFrame directorUpdateFrame;
+
+    CountryAddFrame countryAddFrame;
+    CountryDeleteFrame countryDeleteFrame;
+    CountrySelectFrame countrySelectFrame;
+    CountryUpdateFrame countryUpdateFrame;
 
     MovieAddFrame movieAddFrame;
     MovieDeleteFrame movieDeleteFrame;
     MovieUpdateFrame movieUpdateFrame;
     MovieSelectFrame movieSelectFrame;
+
+    TypeAddFrame typeAddFrame;
+    TypeDeleteFrame typeDeleteFrame;
+    TypeSelectFrame typeSelectFrame;
+    TypeUpdateFrame typeUpdateFrame;
 
     ConnectToSql connectToSql = new ConnectToSql();
     public MainFrame() {
@@ -87,11 +99,12 @@ public class MainFrame extends JFrame implements ActionListener {
             statusLabel.setText(movieAddFrame.getMessage());
         }
         if(source==mb.menus[0].getItem(3)){
-
+            countryAddFrame = new CountryAddFrame();
+            statusLabel.setText(countryAddFrame.getMessage());
         }
-
         if(source==mb.menus[0].getItem(4)){
-
+            typeAddFrame = new TypeAddFrame();
+            statusLabel.setText(typeAddFrame.getMessage());
         }
         if(source==mb.menus[0].getItem(5)){
 
@@ -103,17 +116,20 @@ public class MainFrame extends JFrame implements ActionListener {
             statusLabel.setText(actorDeleteFrame.getMessage());
         }
         if(source==mb.menus[1].getItem(1)){
-
+            directorDeleteFrame = new DirectorDeleteFrame();
+            statusLabel.setText(directorDeleteFrame.getMessage());
         }
         if(source==mb.menus[1].getItem(2)){
             movieDeleteFrame = new MovieDeleteFrame();
             statusLabel.setText(movieDeleteFrame.getMessage());
         }
         if(source==mb.menus[1].getItem(3)){
-
+            countryDeleteFrame = new CountryDeleteFrame();
+            statusLabel.setText(countryDeleteFrame.getMessage());
         }
         if(source==mb.menus[1].getItem(4)){
-
+            typeDeleteFrame = new TypeDeleteFrame();
+            statusLabel.setText(typeDeleteFrame.getMessage());
         }
         if(source==mb.menus[1].getItem(5)){
 
@@ -125,17 +141,20 @@ public class MainFrame extends JFrame implements ActionListener {
             statusLabel.setText(actorSelectFrame.getMessage());
         }
         if(source==mb.menus[2].getItem(1)){
-
+            directorSelectFrame = new DirectorSelectFrame();
+            statusLabel.setText(directorSelectFrame.getMessage());
         }
         if(source==mb.menus[2].getItem(2)){
             movieSelectFrame = new MovieSelectFrame();
             statusLabel.setText(movieSelectFrame.getMessage());
         }
         if(source==mb.menus[2].getItem(3)){
-
+            countrySelectFrame = new CountrySelectFrame();
+            statusLabel.setText(countrySelectFrame.getMessage());
         }
         if(source==mb.menus[2].getItem(4)){
-
+            typeSelectFrame = new TypeSelectFrame();
+            statusLabel.setText(typeSelectFrame.getMessage());
         }
         if(source==mb.menus[2].getItem(5)){
 
@@ -147,17 +166,20 @@ public class MainFrame extends JFrame implements ActionListener {
             statusLabel.setText(actorUpdateFrame.getMessage());
         }
         if(source==mb.menus[3].getItem(1)){
-
+            directorUpdateFrame = new DirectorUpdateFrame();
+            statusLabel.setText(directorUpdateFrame.getMessage());
         }
         if(source==mb.menus[3].getItem(2)){
             movieUpdateFrame = new MovieUpdateFrame();
             statusLabel.setText(movieUpdateFrame.getMessage());
         }
         if(source==mb.menus[3].getItem(3)){
-
+            countryUpdateFrame = new CountryUpdateFrame();
+            statusLabel.setText(countryUpdateFrame.getMessage());
         }
         if(source==mb.menus[3].getItem(4)){
-
+            typeUpdateFrame = new TypeUpdateFrame();
+            statusLabel.setText(typeUpdateFrame.getMessage());
         }
 
 
