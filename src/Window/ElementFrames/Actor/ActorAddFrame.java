@@ -69,11 +69,8 @@ public class ActorAddFrame extends JDialog implements ActionListener {
         connectToSql.startConnection();
 
 
-        try {
-            countries = country.getCountries(connectToSql.conn);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        countries = country.getCountries(connectToSql.conn);
+
         comboCountryNames = new String[countries.size()];
         for (int i=0; i<countries.size(); i++){
             comboCountryNames[i] = countries.get(i).getName();
