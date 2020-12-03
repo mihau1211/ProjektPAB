@@ -21,8 +21,7 @@ public class ActorSelectFrame extends JDialog implements ActionListener {
     ConnectToSql connectToSql = new ConnectToSql();
     Actor actor = new Actor();
 
-    DefaultTableModel model;
-    ArrayList<Actor> actors = new ArrayList<Actor>();
+    ArrayList<Actor> actors;
 
     JButton okButton = new JButton("OK");
 
