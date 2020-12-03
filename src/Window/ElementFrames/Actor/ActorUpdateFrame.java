@@ -18,7 +18,7 @@ public class ActorUpdateFrame extends JDialog implements ActionListener {
     Actor actor = new Actor();
     Country country = new Country();
 
-    ArrayList<Actor> actors = new ArrayList<Actor>();
+    ArrayList<Actor> actors;
     ArrayList<Country> countries = new ArrayList<Country>();
 
     JComboBox countryComboBox;
@@ -79,12 +79,8 @@ public class ActorUpdateFrame extends JDialog implements ActionListener {
         setTitle("Update Actor");
         connectToSql.startConnection();
 
+        countries = country.getCountries(connectToSql.conn);
 
-        try {
-            countries = country.getCountries(connectToSql.conn);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
         comboCountryNames = new String[countries.size()];
         for (int i=0; i<countries.size(); i++){
             comboCountryNames[i] = countries.get(i).getName();
