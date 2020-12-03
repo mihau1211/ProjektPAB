@@ -8,37 +8,31 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        Scanner scan = new Scanner(System.in);
-
         ConnectToSql connectToSql;
         connectToSql=new ConnectToSql();
         connectToSql.startConnection();
 
-        Actor actor = new Actor();
-        ActorHasMovie actorHasMovie = new ActorHasMovie();
-        Country country = new Country();
-        Director director = new Director();
-        Movie movie = new Movie();
         Type type = new Type();
+        Country country = new Country();
 
 //        type.addTypes(connectToSql.conn);
 //        country.addCountries(connectToSql.conn);
 
-        boolean end=true;
-        int switcher;
-        while(end){
-            System.out.println("================================================================================");
-            System.out.println("| 1. Dodaj film");
-            System.out.println("| 2. Dodaj aktora");
-            System.out.println("| 3. Pokaz filmy");
-            System.out.println("| 4. Pokaz aktorow");
-            System.out.println("| 5. Pokaz rezyserow");
-            System.out.println("| 6. Usun film");
-            System.out.println("| 7. Usun aktora");
-            System.out.println("| 8. Zmodyfikuj film");
-            System.out.println("| 9. Zmodyfikuj aktora");
-            System.out.println("| 0. Wyjdz");
-            System.out.println("================================================================================");
+//        boolean end=true;
+//        int switcher;
+//        while(end){
+//            System.out.println("================================================================================");
+//            System.out.println("| 1. Dodaj film");
+//            System.out.println("| 2. Dodaj aktora");
+//            System.out.println("| 3. Pokaz filmy");
+//            System.out.println("| 4. Pokaz aktorow");
+//            System.out.println("| 5. Pokaz rezyserow");
+//            System.out.println("| 6. Usun film");
+//            System.out.println("| 7. Usun aktora");
+//            System.out.println("| 8. Zmodyfikuj film");
+//            System.out.println("| 9. Zmodyfikuj aktora");
+//            System.out.println("| 0. Wyjdz");
+//            System.out.println("================================================================================");
 
 //            long numberID;
 //            switcher = scan.nextInt();
@@ -76,6 +70,6 @@ public class Main {
 //                    break;
 //
 //            }
-        }
+//        }
     }
 }
