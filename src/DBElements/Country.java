@@ -31,17 +31,37 @@ public class Country {
         return countryID + " / " + name;
     }
 
-    public void insertCountry(Connection conn) throws SQLException {
+    public ArrayList<Country> getCountries (Connection conn){
+        ArrayList<Country> countries = new ArrayList<Country>();
+
+        String query = "SELECT * FROM Country";
+
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                Country country = new Country(rs.getLong("idCountry"),rs.getString("CountryName"));
+                countries.add(country);
+            }
+            return countries;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public void insertCountry(Connection conn, String name) throws SQLException {
 
         String query = " insert into Country (countryName)"
                 + " values (?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString (1, getName());
+        preparedStmt.setString (1, name);
 
         preparedStmt.execute();
     }
-    public void deleteCountryByID(Connection conn) throws SQLException {
+    public void deleteCountryByID(Connection conn, long countryID) throws SQLException {
 
         countryID=getCountryID();
         String query = "DELETE FROM country WHERE ?;";
@@ -75,26 +95,13 @@ public class Country {
             System.out.format("|%1$-5s|%2$-20s|\n", id, name);
         }
     }
-    public ArrayList<Country> getCountries(Connection conn) throws SQLException {
-        ArrayList<Country> countries = new ArrayList<Country>();
+    public void updateCountry(Connection conn, String name, long countryID) throws SQLException{
 
-        String query = "SELECT * FROM Country";
-
-        Statement statement = conn.createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        while (rs.next()){
-            Country country = new Country(rs.getLong("idCountry"), rs.getString("CountryName"));
-            countries.add(country);
-        }
-        return countries;
-    }
-    public void updateCountry(Connection conn) throws SQLException{
-
-        String query = "UPDATE Country SET CountryName = ? WHERE idCOuntry = ?;";
+        String query = "UPDATE Country SET CountryName = ? WHERE idCountry = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, getName());
-        preparedStmt.setLong(2, getCountryID());
+        preparedStmt.setString(1, name);
+        preparedStmt.setLong(2, countryID);
 
         preparedStmt.execute();
     }
