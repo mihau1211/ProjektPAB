@@ -33,6 +33,10 @@ public class Director {
         return directorID;
     }
 
+    public String getCountryName() {
+        return countryName;
+    }
+
     @Override
     public String toString(){
         return directorID + " / " + name + " / " + surname + " / " + birthDate + " / " + countryID;
@@ -51,20 +55,26 @@ public class Director {
 
     }
 
-    public ArrayList<Director> getDirectors (Connection conn) throws SQLException {
+    public ArrayList<Director> getDirectors (Connection conn){
         ArrayList<Director> directors = new ArrayList<Director>();
 
         String query = "SELECT * FROM Director, Country WHERE Country_idCountry=idCountry";
 
-        Statement statement = conn.createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        while (rs.next()){
-            Director director = new Director(rs.getString("DirectorName"),rs.getString("DirectorSurname"),
-                    rs.getString("DirectorBirthDate"),rs.getLong("Country_idCountry"),rs.getLong("idDirector"),
-                    rs.getString("CountryName"));
-            directors.add(director);
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                Director director = new Director(rs.getString("DirectorName"),rs.getString("DirectorSurname"),
+                        rs.getString("DirectorBirthDate"),rs.getLong("Country_idCountry"),rs.getLong("idDirector"),
+                        rs.getString("CountryName"));
+                directors.add(director);
+            }
+            return directors;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        return directors;
+        return null;
     }
 
     public void insertDirector(Connection conn,String name, String surname, String birthDate, long country) throws SQLException {
@@ -80,9 +90,8 @@ public class Director {
 
         preparedStmt.execute();
     }
-    public void deleteDirectorByID(Connection conn) throws SQLException {
+    public void deleteDirectorByID(Connection conn, long directorID) throws SQLException {
 
-        directorID=getDirectorID();
         String query = "DELETE FROM director WHERE ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -119,17 +128,17 @@ public class Director {
             System.out.format("|%1$-5s|%2$-20s|%3$-23s|%4$-11s|%5$-13s|\n", id, name, surname, year, country);
         }
     }
-    public void updateDirector(Connection conn) throws SQLException{
+    public void updateDirector(Connection conn, String name, String surname, String birthDate, long countryID, long directorID) throws SQLException{
 
         String query = "UPDATE Director SET DirectorName = ?, DirectorSurname = ?, DirectorBirthDate = ?, Country_idCountry = ?, " +
                 "WHERE idDirector = ?;";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, getName());
-        preparedStmt.setString(1, getSurname());
-        preparedStmt.setString(3, getBirthDate());
-        preparedStmt.setLong(4, getCountryID());
-        preparedStmt.setLong(5, getDirectorID());
+        preparedStmt.setString(1, name);
+        preparedStmt.setString(2, surname);
+        preparedStmt.setString(3, birthDate);
+        preparedStmt.setLong(4, countryID);
+        preparedStmt.setLong(5, directorID);
 
         preparedStmt.execute();
     }
