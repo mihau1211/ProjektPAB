@@ -18,7 +18,7 @@ import java.util.concurrent.Flow;
 public class MovieDeleteFrame extends JDialog implements ActionListener {
     ConnectToSql connectToSql = new ConnectToSql();
     Movie movie = new Movie();
-    ArrayList<Movie> movies = new ArrayList<Movie>();
+    ArrayList<Movie> movies;
 
     JButton okButton = new JButton("OK");
 
