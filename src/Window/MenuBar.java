@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import Connection.*;
 
 public class MenuBar{
-    String[] tables = {"Actor", "Director", "Movie", "Country", "Type", "AHM"};
+    String[] tables = {"Actor...", "Director...", "Movie...", "Country...", "Type...", "AHM..."};
     String[] items = {"Add","Delete","Select","Update"};
     JMenuBar mb = new JMenuBar();
     JMenu menus[] = new JMenu[items.length];
@@ -19,7 +19,7 @@ public class MenuBar{
         for (int i = 0; i < items.length; i++) {
             menus[i] = new JMenu(items[i]);
             for (int j = 0; j < tables.length; j++) {
-                if (i!=3 || j!=5) {
+                if ((i!=3 || j!=5)&&(i!=1 || j!= 5)) {
                     menus[i].add(new JMenuItem(tables[j]));
                 }
             }
