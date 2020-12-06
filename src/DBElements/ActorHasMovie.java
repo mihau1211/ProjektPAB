@@ -1,36 +1,58 @@
 package DBElements;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ActorHasMovie {
-    Scanner scan = new Scanner(System.in);
     long actorID;
     long movieID;
-    long ahmID;
 
     public long getActorID() {
-        System.out.println("Podaj ID:");
-        return actorID = scan.nextLong();
+        return actorID;
     }
 
     public long getMovieID() {
-        System.out.println("Podaj ID:");
-        return movieID = scan.nextLong();
+        return movieID;
     }
 
-    public long getAhmID() {
-        return ahmID = scan.nextLong();
+    public ActorHasMovie(long actorID, long movieID) {
+        this.actorID = actorID;
+        this.movieID = movieID;
     }
 
-    public void insertActorHasMovie(Connection conn) throws SQLException {
+    public ActorHasMovie() {
+
+    }
+
+    public ArrayList<ActorHasMovie> getAHMS(Connection conn){
+        ArrayList<ActorHasMovie> ahms = new ArrayList<ActorHasMovie>();
+
+        String query = "SELECT * FROM Actor_Has_Movie";
+
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                ActorHasMovie ahm = new ActorHasMovie(rs.getLong("Actor_idActor"),rs.getLong("Movie_idMovie"));
+                ahms.add(ahm);
+            }
+            return ahms;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public void insertActorHasMovie(Connection conn, long actorID, long movieID) throws SQLException {
 
         String query = " insert into Actor_Has_Movie (Actor_idActor, Movie_idMovie)"
                 + " values (?, ?)";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setLong (1, getActorID());
-        preparedStmt.setLong (2, getMovieID());
+        preparedStmt.setLong (1, actorID);
+        preparedStmt.setLong (2, movieID);
 
         preparedStmt.execute();
     }
@@ -50,10 +72,6 @@ public class ActorHasMovie {
 
         Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(query);
-        System.out.println("========");
-        System.out.println("||ACTOR_HAS_MOVIE||");
-        System.out.println("========");
-        System.out.println(" |ID_A| |ID_M|");
 
         while (rs.next()){
             long idActor = rs.getLong("Actor_idActor");
