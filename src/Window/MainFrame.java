@@ -1,6 +1,9 @@
 package Window;
 
 import Connection.ConnectToSql;
+import DBElements.ActorHasMovie;
+import Window.ElementFrames.AHM.AHMAddFrame;
+import Window.ElementFrames.AHM.AHMSelectFrame;
 import Window.ElementFrames.Actor.*;
 import Window.ElementFrames.Country.*;
 import Window.ElementFrames.Director.*;
@@ -28,6 +31,9 @@ public class MainFrame extends JFrame implements ActionListener {
     ActorDeleteFrame actorDeleteFrame;
     ActorUpdateFrame actorUpdateFrame;
     ActorSelectFrame actorSelectFrame;
+
+    AHMAddFrame ahmAddFrame;
+    AHMSelectFrame ahmSelectFrame;
 
     DirectorAddFrame directorAddFrame;
     DirectorDeleteFrame directorDeleteFrame;
@@ -69,7 +75,7 @@ public class MainFrame extends JFrame implements ActionListener {
         for (int i=0; i<mb.menus.length; i++){
             mb.menus[i].addActionListener(this);
             for (int j=0; j<mb.tables.length; j++){
-                if (i!=3 || j!=5) {
+                if ((i!=3 || j!=5) && (i!=1 || j!=5)) {
                     mb.menus[i].getItem(j).addActionListener(this);
                 }
             }
@@ -107,7 +113,8 @@ public class MainFrame extends JFrame implements ActionListener {
             statusLabel.setText(typeAddFrame.getMessage());
         }
         if(source==mb.menus[0].getItem(5)){
-
+            ahmAddFrame = new AHMAddFrame();
+            statusLabel.setText(ahmAddFrame.getMessage());
         }
 
         //delete
@@ -130,9 +137,6 @@ public class MainFrame extends JFrame implements ActionListener {
         if(source==mb.menus[1].getItem(4)){
             typeDeleteFrame = new TypeDeleteFrame();
             statusLabel.setText(typeDeleteFrame.getMessage());
-        }
-        if(source==mb.menus[1].getItem(5)){
-
         }
 
         //select
@@ -157,7 +161,8 @@ public class MainFrame extends JFrame implements ActionListener {
             statusLabel.setText(typeSelectFrame.getMessage());
         }
         if(source==mb.menus[2].getItem(5)){
-
+            ahmSelectFrame = new AHMSelectFrame();
+            statusLabel.setText(ahmSelectFrame.getMessage());
         }
 
         //update
@@ -181,23 +186,5 @@ public class MainFrame extends JFrame implements ActionListener {
             typeUpdateFrame = new TypeUpdateFrame();
             statusLabel.setText(typeUpdateFrame.getMessage());
         }
-
-
-
-
-
-
-
-
-
-
-        //test-dla kazdego obiektu menu konsola wyswietla jego pozycje w tablicy
-//        for (int i=0; i<mb.menus.length; i++){
-//            for (int j=0; j<4; j++){
-//                if(source==mb.menus[i].getItem(j)){
-//                    System.out.println("I:  "+i+"\nJ:  "+j);
-//                }
-//            }
-//        }
     }
 }
