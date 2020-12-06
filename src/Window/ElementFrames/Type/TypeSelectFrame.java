@@ -1,11 +1,8 @@
 package Window.ElementFrames.Type;
 
 import Connection.ConnectToSql;
-import DBElements.Country;
-import DBElements.Type;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
