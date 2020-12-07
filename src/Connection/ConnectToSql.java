@@ -29,7 +29,7 @@ public class ConnectToSql {
         hashtable.put("host", "127.0.0.1");
         hashtable.put("user", "root");
 
-        System.out.println(hashtable.get(0));
+        System.out.println(hashtable.get("user"));
 
         Properties applicationProps = new Properties();
         applicationProps.setProperty("host", "127.0.0.1");
