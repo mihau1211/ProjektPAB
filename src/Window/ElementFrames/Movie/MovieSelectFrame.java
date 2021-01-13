@@ -35,36 +35,6 @@ public class MovieSelectFrame extends JDialog implements ActionListener {
         return message;
     }
 
-    public void getMoviesDefault(){
-        connectToSql.startConnection();
-
-        okButton.setBounds(180, 360, 120, 40);
-        okButton.addActionListener(this);
-
-        add(okButton);
-        movies = movie.getMovies(connectToSql.conn);
-        Object[][] rows = new Object[movies.size()][7];
-        for (int i=0; i<movies.size(); i++){
-            for (int j=0; j<7; j++){
-                if (j==0)rows[i][j] = movies.get(i).getMovieID();
-                if (j==1)rows[i][j] = movies.get(i).getName();
-                if (j==2)rows[i][j] = movies.get(i).getYear();
-                if (j==3)rows[i][j] = movies.get(i).getRating();
-                if (j==4)rows[i][j] = movies.get(i).getDirectorName();
-                if (j==5)rows[i][j] = movies.get(i).getTypeName();
-                if (j==6)rows[i][j] = movies.get(i).getCountryName();
-            }
-        }
-
-        table = new JTable(rows, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(500,50));
-        table.setFillsViewportHeight(true);
-        JScrollPane pane = new JScrollPane(table);
-        pane.setBounds(40,50,400, 300);
-        pane.setVisible(true);
-        add(pane);
-    }
-
     public MovieSelectFrame() {
         setLayout(null);
         setModal(true);
