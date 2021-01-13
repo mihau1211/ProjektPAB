@@ -57,7 +57,7 @@ public class Movie {
 
     @Override
     public String toString(){
-        return movieID + " / " + name + " / " + year + " / " + rating + " / " + typeID + " / " + directorID + " / " + countryID;
+        return movieID + " / " + name + " / " + year + " / " + rating + " / " + typeName + " / " + directorName + " / " + countryName;
     }
 
     public Movie(String name, String year, int rating, long typeID, long directorID, long countryID, long movieID, String countryName, String directorName, String typeName) {
