@@ -19,9 +19,11 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainFrame extends JFrame implements ActionListener {
+    Object[][] rows;
 
     JPanel statusPanel = new JPanel();
 
@@ -33,6 +35,11 @@ public class MainFrame extends JFrame implements ActionListener {
     JTable table;
 
     MenuBar mb = new MenuBar();
+
+    JButton printButton = new JButton("Print movies list");
+
+    CreatePDF createPDF = new CreatePDF();
+    PrintPDF printPDF = new PrintPDF();
 
     ActorAddFrame actorAddFrame;
     ActorDeleteFrame actorDeleteFrame;
@@ -63,14 +70,10 @@ public class MainFrame extends JFrame implements ActionListener {
     TypeUpdateFrame typeUpdateFrame;
 
     ConnectToSql connectToSql = new ConnectToSql();
-    public MainFrame() {
-        super("Baza filmowa");
-        setLayout(new BorderLayout());
-        connectToSql.startConnection();
 
-        //// Domyślnie wyświetl filmy
+    public void getMoviesToTable(){
         movies = movie.getMovies(connectToSql.conn);
-        Object[][] rows = new Object[movies.size()][7];
+        rows = new Object[movies.size()][7];
         for (int i=0; i<movies.size(); i++){
             for (int j=0; j<7; j++){
                 if (j==0)rows[i][j] = movies.get(i).getMovieID();
@@ -82,11 +85,23 @@ public class MainFrame extends JFrame implements ActionListener {
                 if (j==6)rows[i][j] = movies.get(i).getCountryName();
             }
         }
+    }
+
+    public MainFrame() {
+        super("Baza filmowa");
+        setLayout(new BorderLayout());
+        connectToSql.startConnection();
+
+        //// Domyślnie wyświetl filmy
+        getMoviesToTable();
 
         String[] columnNames = {"ID","Name","Year","Rating","Director","Type","Country"};
         table = new JTable(rows, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500,50));
         table.setFillsViewportHeight(true);
+        printButton.addActionListener(this);
+        printButton.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        add(printButton, BorderLayout.EAST);
         JScrollPane pane = new JScrollPane(table);
         pane.setBounds(40,50,400, 300);
         pane.setVisible(true);
@@ -134,6 +149,7 @@ public class MainFrame extends JFrame implements ActionListener {
         }
         if(source==mb.menus[0].getItem(2)){
             movieAddFrame = new MovieAddFrame();
+            getMoviesToTable();
             statusLabel.setText(movieAddFrame.getMessage());
         }
         if(source==mb.menus[0].getItem(3)){
@@ -160,6 +176,7 @@ public class MainFrame extends JFrame implements ActionListener {
         }
         if(source==mb.menus[1].getItem(2)){
             movieDeleteFrame = new MovieDeleteFrame();
+            getMoviesToTable();
             statusLabel.setText(movieDeleteFrame.getMessage());
         }
         if(source==mb.menus[1].getItem(3)){
@@ -208,6 +225,7 @@ public class MainFrame extends JFrame implements ActionListener {
         }
         if(source==mb.menus[3].getItem(2)){
             movieUpdateFrame = new MovieUpdateFrame();
+            getMoviesToTable();
             statusLabel.setText(movieUpdateFrame.getMessage());
         }
         if(source==mb.menus[3].getItem(3)){
@@ -217,6 +235,15 @@ public class MainFrame extends JFrame implements ActionListener {
         if(source==mb.menus[3].getItem(4)){
             typeUpdateFrame = new TypeUpdateFrame();
             statusLabel.setText(typeUpdateFrame.getMessage());
+        }
+
+        if (source==printButton){
+            try {
+                createPDF.PDFcreate(movies);
+                printPDF.printPDF(createPDF.getFileName());
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 }
